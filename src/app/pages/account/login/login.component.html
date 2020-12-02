@@ -1,0 +1,67 @@
+<!-- <mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>{{label.login}}</mat-card-title>
+    <mat-card-subtitle>{{label.loginSubtitle}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content *ngIf="!isEmailWindowOpened; else showLoginWindow">
+    <button mat-button (click)="openEmailWindow()">
+      <mat-icon>email</mat-icon>
+      {{label.loginWithEmail}}
+    </button>
+  </mat-card-content>
+  <ng-template #showLoginWindow>
+    <form [formGroup]="signInForm" (ngSubmit)="loginWithEmail(signInForm)">
+      <mat-form-field>
+        <mat-label>{{label.email}}</mat-label>
+        <input type="email" name="email" formControlName="email" matInput placeholder="Ex. pat@example.com">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{label.password}}</mat-label>
+        <input type="password" name="password" formControlName="password" matInput>
+      </mat-form-field>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">{{button.login}}</button>
+        <button mat-button routerLink="/">{{button.cancel}}</button>
+      </mat-card-actions>
+    </form>
+  </ng-template>
+  <mat-card-content>
+    <button mat-button (click)="onSignInWithGoogleClick()">
+      <img src="assets/google.svg" alt="Google">
+      {{label.loginWithGoogle}}
+    </button>
+  </mat-card-content>
+</mat-card> -->
+<!-- <div *ngIf="fs.auth.user | async as user; else showLogin">
+    <h1>Hello {{ user.displayName }}!</h1>
+    <button (click)="logout()">Logout</button>
+</div>
+<ng-template #showLogin>
+    <p>Please login.</p>
+    <button (click)="loginWithGoogle()">Login with Google</button>
+</ng-template> -->
+
+<form
+    class="form"
+    [formGroup]="loginForm"
+    (ngSubmit)="loginWithEmail(loginForm)">
+    <button routerLink="/" class="exit-button">
+        <div class="cross-line"></div>
+    </button>
+    <h1>Logowanie</h1>
+    <input 
+        type="email"
+        name="email"
+        placeholder="adres e-mail"
+        formControlName="email">
+    <input
+        type="password"
+        name="password"
+        placeholder="hasło"
+        formControlName="password">
+    <button class="submit-button" type="submit">
+        Zaloguj się
+    </button>
+    <div class="topbar"></div>
+    <a routerLink="/account/remember">Nie pamiętam hasła</a>
+</form>

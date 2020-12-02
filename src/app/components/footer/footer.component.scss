@@ -1,0 +1,39 @@
+$primary-color: #242985;
+$secondary-color: #F8931F;
+
+.footer {
+    background-color: $primary-color;
+    &-start {
+        display: flex;
+        flex-direction: column;
+        padding: 32px 22px;
+        h1, a {
+            color: white;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        a {
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    &-end {
+        width: 100%;
+        text-align: center;
+        color: white;
+        padding: 20px;
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    .footer {
+        &-start {
+            padding: 32px 80px;
+        }
+        &-end {
+            padding: 0 80px 48px;
+        }
+    }
+}

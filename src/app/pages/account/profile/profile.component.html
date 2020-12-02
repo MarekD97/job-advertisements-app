@@ -1,0 +1,65 @@
+<!-- <h1 *ngIf="fs.auth.user | async as user">displayName: {{user.displayName}}</h1>
+<form *ngIf="fsData != undefined">
+    <label>Firstname</label>
+    <input type="text" name="firstname" value="{{fsData.firstname}}"><br />
+    <label>Lastname</label>
+    <input type="text" name="lastname" value="{{fsData.lastname}}"><br />
+    <label>Email</label>
+    <input type="email" name="email" value="{{fs.currentUser.email}}"><br />
+    <label>Phone Number</label>
+    <input type="tel" name="phoneNumber" value="{{fs.currentUser.phoneNumber}}"><br />
+    <label>Address</label><br />
+    <label>PictureUrl</label>
+    <input type="url" name="pictureURL" value="{{fs.currentUser.pictureURL}}"><br />
+
+</form>
+
+<button routerLink="/create-advertisement">Dodaj nowe ogłoszenie</button> -->
+<!-- 
+<li>id</li>
+    <li>firstName</li>
+    <li>lastName</li>
+    <li>email</li>
+    <li>phoneNumber</li>
+    <li>address</li>
+    <ul>
+        <li>city</li>
+        <li>country</li>
+        <li>postcode</li>
+        <li>streetName</li>
+        <li>streetNumber</li>
+    </ul>
+    <li>pictureURL</li> -->
+
+<div *ngIf="fs.auth.user | async as user">
+    <h2>Edytuj dane</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="updateProfileData(profileForm)">
+        <div>
+            <img src="{{user.photoURL != undefined ? user.photoURL : photoURL}}" alt="{{user.displayName}}" style="width: 100px;height: 100px;">
+            <h3>{{user.displayName}}</h3>
+            <input type="file" #userPhoto (change)="onFileSelected($event)" value="Załaduj nowe zdjęcie">
+            <p>Imię</p>
+            <input type="text" name="firstname" value="{{fsData != undefined ? fsData.firstname : ''}}" formControlName="firstname">
+            <p>Nazwisko</p>
+            <input type="text" name="lastname" value="{{fsData != undefined ? fsData.lastname : ''}}" formControlName="lastname">
+            <p>E-mail</p>
+            <p>{{user.email}}</p>
+            <p>Numer telefonu</p>
+            <input type="text" name="phoneNumber" value="{{fsData != undefined ? fsData.phoneNumber : ''}}" formControlName="phoneNumber">
+        </div>
+        <div>
+            <h3>Adres</h3>
+            <p>Ulica</p>
+            <input type="text" name="streetName" value="{{fsData != undefined ? fsData.address.streetName : ''}}" formControlName="streetName">
+            <input type="text" name="streetNumber" value="{{fsData != undefined ? fsData.address.streetNumber : ''}}" formControlName="streetNumber">
+            <p>Kod pocztowy</p>
+            <input type="text" name="postcode" value="{{fsData != undefined ? fsData.address.postcode : ''}}" formControlName="postcode">
+            <p>Miasto</p>
+            <input type="text" name="city" value="{{fsData != undefined ? fsData.address.city : ''}}" formControlName="city">
+            <p>Kraj</p>
+            <input type="text" name="country" value="{{fsData != undefined ? fsData.address.country : ''}}" formControlName="country">
+        </div>
+        <button routerLink="/account/settings">Anuluj</button>
+        <button type="submit">Zapisz wszystkie zmiany</button>
+    </form>
+</div>

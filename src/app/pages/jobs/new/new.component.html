@@ -1,0 +1,25 @@
+<div>
+    <h2>Dodaj nowe ogłoszenie</h2>
+    <form [formGroup]="newJobForm" method="POST">
+        <div>
+            <h3>Tytuł ogłoszenia</h3>
+            <input type="text" name="title" formControlName="title">
+            <h3>Zdjęcie</h3>
+            <button>Wybierz</button>
+        </div>
+        <div>
+            <h3>Kategoria</h3>
+            <input type="text" name="category" formControlName="category">
+            <h3>Wynagrodzenie za pracę</h3>
+            <input type="text" name="expectedPrice" formControlName="expectedPrice">
+            <h3>Czy pełnoletność jest wymagana?</h3>
+            <input type="checkbox" name="isAgeOfMajorityRequired" formControlName="isAgeOfMajorityRequired">
+            <h3>Szczegółowy opis</h3>
+            <textarea name="detail" formControlName="detail"></textarea>
+            <button (click)="createAdvertisement(newJobForm, false)">Tylko zapisz</button>
+            <button (click)="createAdvertisement(newJobForm, true)">Zapisz i opublikuj</button>
+            <button>Anuluj</button>
+        </div>
+
+    </form>
+</div>

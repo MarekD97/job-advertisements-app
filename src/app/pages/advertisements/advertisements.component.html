@@ -1,0 +1,16 @@
+<div class="container">
+    <h1>Lista ogłoszeń</h1>
+    <div *ngFor="let item of dataList" class="element">
+        <div class="element-content">
+            <img src="https://www.w3schools.com/w3css/img_snowtops.jpg" alt="picture">
+            <span>
+                <h1>{{item.title}}</h1>
+                <h3>Kategoria: {{item.category}}</h3>
+                <h2>Użytkownik: </h2>
+                <p>{{item.detail}}</p>
+            </span>
+        </div>
+        <hr class="element-line"/>
+        <p>Opublikowano: {{item.updatedAt.toDate() | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+    </div>
+</div>

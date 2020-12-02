@@ -12,8 +12,14 @@ export class AdvertisementsComponent implements OnInit {
   constructor(public fs: FirebaseService, public router: Router) {
     this.fs.getAdvertisements().subscribe((data) => {
       this.dataList = data;
+      this.dataList.map((item) => {
+        this.fs.fs.collection("users").doc(item['userAccountId']).valueChanges().subscribe(data=> {
+          item['USER'] = data;
+        });
+      });
+      
       console.log(this.dataList);
-    })
+    });
   }
 
   ngOnInit(): void {

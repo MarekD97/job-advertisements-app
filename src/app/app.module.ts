@@ -22,10 +22,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { LoginComponent } from './pages/account/login/login.component';
-import { AdvertisementsComponent } from './pages/advertisements/advertisements.component';
 import { LogoutComponent } from './pages/account/logout/logout.component';
 import { SettingsComponent } from './pages/account/settings/settings.component';
 import { NewJobComponent } from './pages/jobs/new/new.component';
+import { ShowJobComponent } from './pages/jobs/show/show.component';
+import { JobsComponent } from './pages/jobs/jobs.component';
 
 @NgModule({
   declarations: [
@@ -38,10 +39,11 @@ import { NewJobComponent } from './pages/jobs/new/new.component';
     FooterComponent,
     HeaderComponent,
     SearchbarComponent,
-    AdvertisementsComponent,
     LogoutComponent,
     SettingsComponent,
-    NewJobComponent
+    NewJobComponent,
+    ShowJobComponent,
+    JobsComponent,
   ],
   imports: [
     BrowserModule,

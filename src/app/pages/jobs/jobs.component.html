@@ -1,0 +1,19 @@
+<div class="wrapper">
+    <div *ngFor="let item of dataList | slice:0:1" class="element">
+        <a [routerLink]="['/jobs/', item.id]">
+            <h1>{{item.title}}</h1>
+            <img 
+                src="{{item.image.url}}" 
+                alt="{{item.image.alt}}">
+            <div class="element-author">
+                <img 
+                    src="{{item.author.image.url}}" 
+                    alt="{{item.author.firstname}} {{item.author.lastname}}">
+                <h2>{{item.author.firstname}} {{item.author.lastname}}</h2>
+            </div>
+            <p>{{item.detail}}</p>
+        </a>
+        <hr class="element-line"/>
+        <p>Opublikowano: {{item.updatedAt.toDate() | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+    </div>
+</div>

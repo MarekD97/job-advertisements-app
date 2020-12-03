@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import firebase from 'firebase/app';
 
 @Injectable({
@@ -9,7 +10,7 @@ import firebase from 'firebase/app';
 export class FirebaseService {
   isLogged = false;
   currentUser: any;
-  constructor(public fs: AngularFirestore, public auth: AngularFireAuth) {
+  constructor(public fs: AngularFirestore, public auth: AngularFireAuth, private storage: AngularFireStorage) {
     auth.onAuthStateChanged((user)=> {
       // console.log(user);
       if(user) {
@@ -36,7 +37,6 @@ export class FirebaseService {
 
   //Sign up new users
   async signUp(email: string, password: string) {
-    console.log('New user');
     try {
       if(!email || !password) throw new Error('Invalid email and/or password')
       await this.auth.createUserWithEmailAndPassword(email, password)
@@ -46,10 +46,10 @@ export class FirebaseService {
           this.currentUser = user;
         })
       });
+      console.log('Sign in success');
       return true;
     } catch(error) {
-      console.log('Sign in failed', error);
-      return false;
+      return error;
     }
   }
 
@@ -89,7 +89,6 @@ export class FirebaseService {
   }
 
   getProfileData() {
-    // console.log(this.currentUser.uid);
     return this.fs.collection('users').doc(this.currentUser.uid).valueChanges();
   }
 

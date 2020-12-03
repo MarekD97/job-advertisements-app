@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -15,52 +15,44 @@ export class ProfileComponent implements OnInit {
   fsDataSub: Subscription;
   fsData: any;
   profileForm: FormGroup;
-  photoURL: string;
+  photoURL: any;
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router, private storage: AngularFireStorage) {
+    this.profileForm = this.fb.group({
+      firstname: new FormControl('', [Validators.required]),
+      lastname: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('', [Validators.required]),
+      address: new FormGroup({
+        streetName: new FormControl('', [Validators.required]),
+        streetNumber: new FormControl('', [Validators.required]),
+        postcode: new FormControl('', [Validators.required]),
+        city: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+      }),
+      image: new FormGroup({
+        url: new FormControl('', [Validators.required])
+      })
+    });
     this.fs.auth.onAuthStateChanged((user) => {
       if(user) {
         this.fsDataSub = this.fs.getProfileData().subscribe(data => {
           this.fsData = data;
-          console.log(this.fsData);
+          this.profileForm.patchValue(data);
         })
       } else {
         router.navigate(['/']);
       }
     });
     this.loadPicture();
-    this.profileForm = this.fb.group({
-      firstname: new FormControl(),
-      lastname: new FormControl(),
-      phoneNumber: new FormControl(),
-      streetName: new FormControl(),
-      streetNumber: new FormControl(),
-      postcode: new FormControl(),
-      city: new FormControl(),
-      country: new FormControl(),
-    });
   }
 
   ngOnInit(): void {
   }
 
   updateProfileData(fg: FormGroup) {
-    let newProfileData = {
-      firstname: fg.value.firstname,
-      lastname: fg.value.lastname,
-      phoneNumber: fg.value.phoneNumber,
-      address: {
-        streetName: fg.value.streetName,
-        streetNumber: fg.value.streetNumber,
-        postcode: fg.value.postcode,
-        city: fg.value.city,
-        country: fg.value.country
-      }
-    }
-    console.log(newProfileData);
-    this.fs.updateProfileData(newProfileData);
+    this.fs.updateProfileData(fg.value);
     this.fs.auth.user.subscribe(userState => {
       userState.updateProfile({
-        displayName: `${newProfileData.firstname} ${newProfileData.lastname}`,
+        displayName: `${fg.value.firstname} ${fg.value.lastname}`,
         photoURL: this.photoURL
       })
     })
@@ -84,6 +76,11 @@ export class ProfileComponent implements OnInit {
       fileRef.getDownloadURL().subscribe(url => {
         if(url) {
           this.photoURL = url;
+          this.profileForm.patchValue({
+            image: {
+              url: this.photoURL
+            }
+          });
           console.log(url)
         }
       });

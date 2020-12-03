@@ -1,3 +1,7 @@
-<h1>Czy napewno chcesz się wylogować?</h1>
-<button (click)="onLogoutClick()">Tak</button>
-<button routerLink="/">Nie</button>
+<div>
+    <p>Czy napewno chcesz się wylogować?</p>
+    <span>
+        <button (click)="onLogoutClick()">Tak</button>
+        <button (click)="goBack()" class="cancel">Nie</button>
+    </span>
+</div>

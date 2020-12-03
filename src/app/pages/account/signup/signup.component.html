@@ -1,52 +1,56 @@
-<!-- <mat-card>
-    <mat-card-content *ngIf="!emailVerification; else showVerify;">
-    <form [formGroup]="signUpForm" (ngSubmit)="signUpWithEmail(signUpForm)" method="POST">
-      <mat-form-field>
-        <mat-label>{{label.email}}</mat-label>
-        <input type="email" name="email" formControlName="email" matInput placeholder="Ex. pat@example.com">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>{{label.password}}</mat-label>
-        <input type="password" name="password" formControlName="password" matInput>
-      </mat-form-field>
-      <mat-card-actions>
-        <button mat-raised-button color="primary">{{button.signUp}}</button>
-        <button mat-button routerLink="/">{{button.cancel}}</button>
-      </mat-card-actions>
-    </form>
-  </mat-card-content>
-  <ng-template #showVerify>
-    Wysłano na maila link aktywujący...
-  </ng-template>
-</mat-card> -->
-
-<div>
-  <h2>Stwórz nowe konto</h2>
-  <h1>Dołącz do naszej społeczności!</h1>
-  <div>
-    <div>
-      <p>Możesz zalogować się także poprzez:</p>
-      <button (click)="signInWithGoogle()">
-        Google
-      </button>
-      <button>
-        Facebook
-      </button>
-      <button>
-        Twitter
-      </button>
-    </div>
-    <form [formGroup]="signUpForm" (ngSubmit)="signUpWithEmail(signUpForm)" method="POST">
-      <p>E-mail</p>
-      <input type="email" name="email" formControlName="email" placeholder="Adres e-mail">
-      <p>Nowe hasło</p>
-      <input type="password" name="password" formControlName="password" placeholder="Hasło">
-      <p>Powtórz hasło</p>
-      <input type="password" name="password-repeat" formControlName="passwordRepeat" placeholder="Powtórz hasło">
-      <div>
-        <button>Anuluj</button>
-        <button type="submit">Utwórz konto</button>
+<h2>Stwórz nowe konto</h2>
+<h1 *ngIf="status==undefined">Dołącz do naszej społeczności!</h1>
+<h1 *ngIf="status!=undefined">{{status}}</h1>
+<div class="container">
+  <div class="column">
+    <form
+        [formGroup]="signUpForm"
+        (ngSubmit)="signUpWithEmail(signUpForm)">
+        <p>E-mail</p>
+        <input 
+        type="email"
+            name="email"
+            placeholder="adres e-mail"
+            formControlName="email">
+        <p>Hasło</p>
+        <input
+        type="password"
+            name="password"
+            placeholder="hasło"
+            formControlName="password">
+        <input
+            type="password"
+            name="confirmPassword"
+            placeholder="powtórz hasło"
+            formControlName="confirmPassword">
+            <span>
+              <button routerLink="/" type="button" class="cancel">Anuluj</button>
+              <input class="submit" type="submit" value="Załóż konto">
+            </span>
+            <div class="topbar"></div>
+          </form>
+        </div>
+      <div class="column">
+        <p class="social-header">Możesz zalogować się także poprzez:</p>
+        <div class="social">
+          <button (click)="onSignInWithGoogleClick()">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M28.4667 14.8H16.24V18.44H24.92C24.48 23.52 20.2533 25.6933 16.2533 25.6933C11.1467 25.6933 6.66667 21.6666 6.66667 16C6.66667 10.5333 10.9333 6.30663 16.2667 6.30663C20.3867 6.30663 22.8 8.93329 22.8 8.93329L25.3333 6.29329C25.3333 6.29329 22.08 2.66663 16.1333 2.66663C8.56 2.66663 2.70667 9.06663 2.70667 16C2.70667 22.7333 8.21333 29.3333 16.3333 29.3333C23.4667 29.3333 28.6667 24.44 28.6667 17.2133C28.6667 15.68 28.4667 14.8 28.4667 14.8Z" fill="#242985"/>
+            </svg>
+            <p>Google</p>        
+          </button>
+          <!-- <button>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2.71997C8.66663 2.71997 2.66663 8.70664 2.66663 16.08C2.66663 22.7466 7.54663 28.28 13.92 29.28V19.9466H10.5333V16.08H13.92V13.1333C13.92 9.78664 15.9066 7.94664 18.96 7.94664C20.4133 7.94664 21.9333 8.19997 21.9333 8.19997V11.4933H20.2533C18.6 11.4933 18.08 12.52 18.08 13.5733V16.08H21.7866L21.1866 19.9466H18.08V29.28C21.2219 28.7838 24.0829 27.1807 26.1465 24.7601C28.2102 22.3394 29.3404 19.2608 29.3333 16.08C29.3333 8.70664 23.3333 2.71997 16 2.71997Z" fill="#242985"/>
+            </svg>
+            <p>Facebook</p>        
+          </button>
+          <button>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M29.9467 8.00004C28.92 8.46671 27.8133 8.77337 26.6667 8.92004C27.84 8.21337 28.7467 7.09337 29.1733 5.74671C28.0667 6.41337 26.84 6.88004 25.5467 7.14671C24.4933 6.00004 23.0133 5.33337 21.3333 5.33337C18.2 5.33337 15.64 7.89337 15.64 11.0534C15.64 11.5067 15.6933 11.9467 15.7867 12.36C11.04 12.12 6.81334 9.84004 4.00001 6.38671C3.50668 7.22671 3.22668 8.21337 3.22668 9.25337C3.22668 11.24 4.22668 13 5.77334 14C4.82668 14 3.94668 13.7334 3.17334 13.3334V13.3734C3.17334 16.1467 5.14668 18.4667 7.76001 18.9867C6.92098 19.2163 6.04014 19.2483 5.18668 19.08C5.54882 20.2167 6.25806 21.2113 7.2147 21.9239C8.17134 22.6366 9.32727 23.0316 10.52 23.0534C8.49818 24.654 5.99201 25.5191 3.41334 25.5067C2.96001 25.5067 2.50668 25.48 2.05334 25.4267C4.58668 27.0534 7.60001 28 10.8267 28C21.3333 28 27.1067 19.28 27.1067 11.72C27.1067 11.4667 27.1067 11.2267 27.0933 10.9734C28.2133 10.1734 29.1733 9.16004 29.9467 8.00004Z" fill="#242985"/>
+            </svg> 
+            <p>Twitter</p>              
+          </button> -->
+        </div>
       </div>
-    </form>
-  </div>
 </div>

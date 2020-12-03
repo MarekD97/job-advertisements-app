@@ -20,7 +20,7 @@ $secondary-color: #F8931F;
             align-items: center;
             transition: transform .3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
             &:hover {
-                transform: scale(1.15);
+                transform: scale(1.05);
             }
         }
         svg {
@@ -63,6 +63,7 @@ $secondary-color: #F8931F;
         height: 48px;
         background-color: transparent;
         margin-left: auto;
+        cursor: pointer;
         .burger-line {
             width: 36px;
             height: 4px;

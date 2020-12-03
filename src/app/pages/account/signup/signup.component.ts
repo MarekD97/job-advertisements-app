@@ -9,18 +9,20 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  
+
   public signUpForm: FormGroup;
+  public status: string;
+
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router ) {
     fs.auth.onAuthStateChanged((user)=>{
       if(user) {
-        this.router.navigate(['/']);
+        this.router.navigate(['/account/settings']);
       }
     });
     this.signUpForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      passwordRepeat: new FormControl('', [Validators.required])
+      confirmPassword: new FormControl('', [Validators.required])
     })
   }
 
@@ -28,15 +30,30 @@ export class SignupComponent implements OnInit {
   }
 
   signUpWithEmail(fg: FormGroup) {
-    if(fg.value.password === fg.value.passwordRepeat) {
-      this.fs.signUp(fg.value.email, fg.value.password);
-      console.log("Utworzono");
+    if(fg.value.password === fg.value.confirmPassword) {
+      this.fs.signUp(fg.value.email, fg.value.password).then(status => {
+        if(status!=true) {
+          switch(status.code) {
+            case 'auth/weak-password': 
+              this.status = 'Hasło musi się składać z przynajmniej 6 znaków!';
+              break;
+            case 'auth/email-already-in-use': 
+              this.status = 'Ten adres e-mail jest aktualnie używany przez inne konto.';
+              break;
+            default: 
+              this.status = 'Wystąpił nieoczekiwany błąd.';
+              break;
+          }
+        } else {
+          this.router.navigate(['/account/profile']);
+        }
+      });
     } else {
-      console.log("Hasła nie pasują do siebie!");
+      this.status = "Hasła nie pasują do siebie!";
     }
   }
 
-  signInWithGoogle() {
+  onSignInWithGoogleClick() {
     this.fs.signInWithGoogle();
   }
 

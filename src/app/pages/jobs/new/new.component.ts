@@ -11,6 +11,11 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 export class NewJobComponent implements OnInit {
   newJobForm: FormGroup;
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router) {
+    fs.auth.onAuthStateChanged((user)=>{
+      if(!user) {
+        this.router.navigate(['/account/login']);
+      }
+    })
     this.newJobForm = this.fb.group({
       title: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),

@@ -10,26 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  label = {
-    email: 'Email',
-    password: 'Hasło',
-    login: 'Zaloguj się',
-    loginSubtitle: 'Poniżej dostępne opcje',
-    loginWithEmail: 'Zaloguj przez Email',
-    loginWithGoogle: 'Zaloguj przez Google'
-  }
-  button = {
-    login: 'Zaloguj',
-    cancel: 'Anuluj'
-  };
-
   public userAuth: Subscription;
   public isEmailWindowOpened: boolean = false;
   public loginForm: FormGroup;
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router) {
     fs.auth.onAuthStateChanged((user)=>{
       if(user) {
-        this.router.navigate(['/advertisements']);
+        this.router.navigate(['/account/settings']);
       }
     })
     this.loginForm = this.fb.group({

@@ -1,2 +1,15 @@
 <p>show works!</p>
 <p>{{jobId}}</p>
+<img src="{{jobData.image.url}}" alt="zdjęcie">
+
+<h1>Wyślij wiadomość</h1>
+<form>
+    <h1>Autor {{jobAuthor.firstname}} {{jobAuthor.lastname}}</h1>
+    <img src="{{jobAuthor.image.url}}" alt="x" style="width: 64px;height: 64px;">
+    <h1>Telefon: {{jobAuthor.phoneNumber}}</h1>
+</form>
+<app-message-form
+  messageTo="{{jobAuthor.firstname}} {{jobAuthor.lastname}}"
+  [receiverId]="jobData.userAccountId"
+  [advertisementId]="jobId">
+</app-message-form>

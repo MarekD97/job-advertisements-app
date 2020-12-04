@@ -11,14 +11,14 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   public userAuth: Subscription;
-  public isEmailWindowOpened: boolean = false;
+  public isEmailWindowOpened = false;
   public loginForm: FormGroup;
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router) {
-    fs.auth.onAuthStateChanged((user)=>{
-      if(user) {
+    fs.auth.onAuthStateChanged((user) => {
+      if (user) {
         this.router.navigate(['/account/settings']);
       }
-    })
+    });
     this.loginForm = this.fb.group({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -28,27 +28,32 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async loginWithEmail(fg: FormGroup) {
+  async loginWithEmail(fg: FormGroup): Promise<void>{
     try {
-      if (!fg.valid) throw new Error('Invalid sign-in credentials');
+      if (!fg.valid) {
+        throw new Error('Invalid sign-in credentials');
+      }
       const result = await this.fs.signIn(fg.value.email, fg.value.password);
       console.log('that tickles', result);
-      if (result) this.router.navigate([ 'tasks' ]);
-      else throw new Error('Sign-in failed');
+      if (result) {
+        this.router.navigate([ 'tasks' ]);
+      } else {
+        throw new Error('Sign-in failed');
+      }
     } catch (error) {
         console.log(error);
     }
-    // (await this.fs.auth.currentUser).updateProfile({
-    //   displayName: "mdorosz2",
-    //   photoURL: 'https://simpleicon.com/wp-content/uploads/account.png'
-    // });
   }
 
-  onSignInWithGoogleClick() {
+  onSignInWithGoogleClick(): void {
     this.fs.signInWithGoogle();
   }
 
-  openEmailWindow() {
+  onSignInWithFacebookClick(): void {
+    this.fs.signInWithFacebook();
+  }
+
+  openEmailWindow(): void {
     this.isEmailWindowOpened = true;
   }
 

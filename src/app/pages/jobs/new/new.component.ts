@@ -11,11 +11,11 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 export class NewJobComponent implements OnInit {
   newJobForm: FormGroup;
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router) {
-    fs.auth.onAuthStateChanged((user)=>{
-      if(!user) {
+    fs.auth.onAuthStateChanged((user) => {
+      if (!user) {
         this.router.navigate(['/account/login']);
       }
-    })
+    });
     this.newJobForm = this.fb.group({
       title: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
@@ -28,8 +28,8 @@ export class NewJobComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  createAdvertisement(fg: FormGroup, isPublished: boolean) {
-    let newAdvertisement = {
+  createAdvertisement(fg: FormGroup, isPublished: boolean): void {
+    const newAdvertisement = {
       title: fg.value.title,
       category: fg.value.category,
       expectedPrice: fg.value.expectedPrice,
@@ -41,6 +41,10 @@ export class NewJobComponent implements OnInit {
       isActive: isPublished,
     }
     this.fs.createNewAdvertisement(newAdvertisement);
+  }
+
+  onFileSelected(event: any): void {
+
   }
 
 }

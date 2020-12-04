@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateProfileData(fg: FormGroup) {
+  updateProfileData(fg: FormGroup): void {
     this.fs.updateProfileData(fg.value);
     this.fs.auth.user.subscribe(userState => {
       userState.updateProfile({
@@ -58,7 +58,7 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  onFileSelected(event) {
+  onFileSelected(event): void {
     const file = event.target.files[0];
     const filePath = `userPicture/${this.fs.currentUser.uid}`;
     const fileRef = this.storage.ref(filePath);
@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  loadPicture() {
+  loadPicture(): void {
     const filePath = `userPicture/${this.fs.currentUser.uid}`;
     const fileRef = this.storage.ref(filePath);
     fileRef.getDownloadURL().subscribe(url => {

@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div *ngFor="let item of dataList | slice:0:1" class="element">
+    <div *ngFor="let item of dataList | slice:0:10" class="element">
         <a [routerLink]="['/jobs/', item.id]">
             <h1>{{item.title}}</h1>
             <img 

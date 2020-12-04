@@ -17,11 +17,11 @@ export class LogoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goBack() {
+  goBack(): void {
     this.location.back();
   }
 
-  onLogoutClick() {
+  onLogoutClick(): void {
     this.fs.signOut();
     this.router.navigate(['/']);
   }

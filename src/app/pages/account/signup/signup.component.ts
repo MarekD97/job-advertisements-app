@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
   public status: string;
 
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router ) {
-    fs.auth.onAuthStateChanged((user)=>{
+    fs.auth.onAuthStateChanged((user) => {
       if(user) {
         this.router.navigate(['/account/settings']);
       }
@@ -27,20 +27,21 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
-  signUpWithEmail(fg: FormGroup) {
+  signUpWithEmail(fg: FormGroup): void {
     if(fg.value.password === fg.value.confirmPassword) {
       this.fs.signUp(fg.value.email, fg.value.password).then(status => {
         if(status!=true) {
           switch(status.code) {
-            case 'auth/weak-password': 
+            case 'auth/weak-password':
               this.status = 'Hasło musi się składać z przynajmniej 6 znaków!';
               break;
-            case 'auth/email-already-in-use': 
+            case 'auth/email-already-in-use':
               this.status = 'Ten adres e-mail jest aktualnie używany przez inne konto.';
               break;
-            default: 
+            default:
               this.status = 'Wystąpił nieoczekiwany błąd.';
               break;
           }
@@ -49,11 +50,11 @@ export class SignupComponent implements OnInit {
         }
       });
     } else {
-      this.status = "Hasła nie pasują do siebie!";
+      this.status = 'Hasła nie pasują do siebie!';
     }
   }
 
-  onSignInWithGoogleClick() {
+  onSignInWithGoogleClick(): void {
     this.fs.signInWithGoogle();
   }
 

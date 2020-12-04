@@ -1,0 +1,10 @@
+<form
+  [formGroup]="messageForm"
+  (ngSubmit)="sendMessage(messageForm)">
+    <h1>Wiadomość do: {{messageTo}}</h1>
+    <textarea name="content" cols="30" rows="10" formControlName="content"></textarea>
+    <span>
+        <button type="button" class="cancel" (click)="onCancelClick()">Anuluj</button>
+        <input type="submit" value="Wyślij">
+    </span>
+</form>

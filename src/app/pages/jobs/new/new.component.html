@@ -1,24 +1,37 @@
 <div>
     <h2>Dodaj nowe ogłoszenie</h2>
     <form [formGroup]="newJobForm" method="POST">
-        <div>
+        <div class="column">
             <h3>Tytuł ogłoszenia</h3>
             <input type="text" name="title" formControlName="title">
             <h3>Zdjęcie</h3>
-            <button>Wybierz</button>
+            <label for="fileInput" class="button">
+                <input id="fileInput" type="file" #userPhoto (change)="onFileSelected($event)" style="display:none">
+                Wybierz
+            </label>
         </div>
-        <div>
+        <div class="column">
             <h3>Kategoria</h3>
-            <input type="text" name="category" formControlName="category">
+            <select name="category" formControlName="category">
+                <option value="cleaning">Sprzątanie</option>
+                <option value="childcare">Opieka nad zwierzętami</option>
+                <option value="animalscare">Opieka nad dziećmi</option>
+                <option value="disabledcare">Opieka nad osobami niepełnosprawnymi</option>
+                <option value="gardening">Ogrodnictwo</option>
+                <option value="privatelessons">Udzielanie korepetycji</option>
+                <option value="transport">Transport</option>
+                <option value="seasonwork">Praca sezonowa</option>
+                <option value="others">Inne</option>
+            </select>
             <h3>Wynagrodzenie za pracę</h3>
             <input type="text" name="expectedPrice" formControlName="expectedPrice">
             <h3>Czy pełnoletność jest wymagana?</h3>
             <input type="checkbox" name="isAgeOfMajorityRequired" formControlName="isAgeOfMajorityRequired">
             <h3>Szczegółowy opis</h3>
-            <textarea name="detail" formControlName="detail"></textarea>
+            <textarea row="4" name="detail" formControlName="detail"></textarea>
             <button (click)="createAdvertisement(newJobForm, false)">Tylko zapisz</button>
             <button (click)="createAdvertisement(newJobForm, true)">Zapisz i opublikuj</button>
-            <button>Anuluj</button>
+            <button routerLink="/account/settings" class="cancel">Anuluj</button>
         </div>
 
     </form>

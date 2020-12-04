@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  isOpen: boolean = false;
-  
+  isOpen = false;
+
   constructor(public fs: FirebaseService, public router: Router) {
 
   }
@@ -17,11 +17,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onBurgerClick() {
+  onBurgerClick(): void {
     this.isOpen = !this.isOpen;
   }
 
-  onMenuClick() {
+  onMenuClick(): void {
     this.isOpen = false;
   }
 

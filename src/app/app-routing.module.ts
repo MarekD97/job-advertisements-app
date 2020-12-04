@@ -1,3 +1,4 @@
+import { MessagesComponent } from './pages/messages/messages.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'account/profile', component: ProfileComponent },
   { path: 'jobs', component: JobsComponent },
   { path: 'jobs/new', component: NewJobComponent },
-  { path: 'jobs/:id', component: ShowJobComponent }
+  { path: 'jobs/:id', component: ShowJobComponent },
+  { path: 'messages', component: MessagesComponent }
 ];
 
 @NgModule({

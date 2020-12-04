@@ -27,6 +27,8 @@ import { SettingsComponent } from './pages/account/settings/settings.component';
 import { NewJobComponent } from './pages/jobs/new/new.component';
 import { ShowJobComponent } from './pages/jobs/show/show.component';
 import { JobsComponent } from './pages/jobs/jobs.component';
+import { MessageFormComponent } from './components/message-form/message-form.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { JobsComponent } from './pages/jobs/jobs.component';
     NewJobComponent,
     ShowJobComponent,
     JobsComponent,
+    MessageFormComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,

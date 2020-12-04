@@ -11,12 +11,8 @@
                 <path d="M3.79485 8.10974C9.88786 15.7928 20.1767 20.8405 31.8429 20.8405C34.1676 20.8405 36.4375 20.6401 38.6305 20.2584C20.5883 26.6219 6.6423 41.709 1.82396 60.4729C0.624813 53.483 0 46.2961 0 38.9628C0 28.3184 1.31642 17.9824 3.79485 8.10974Z" fill="#F8931F"/>
             </svg>
             <span>
-                <h1>
-                    Praca
-                </h1>
-                <h2>
-                    dla młodych
-                </h2>
+                <h1>Praca</h1>
+                <h2>dla młodych</h2>
             </span>
         </a>
         <button (click)="onBurgerClick()" class="navbar-burger {{isOpen ? 'is-active' : ''}}">
@@ -31,11 +27,11 @@
             Oferty pracy
         </a>
         <a routerLink="/account/settings" class="navbar-link" (click)="onMenuClick()">
-            <img *ngIf="user.photoURL != undefined" src="{{user.photoURL}}" alt="{{user.displayName}}" style="width:24px;height:24px;border-radius:24px;margin-right:16px;" />                    
+            <img *ngIf="user.photoURL != undefined" src="{{user.photoURL}}" alt="{{user.displayName}}" style="width:24px;height:24px;border-radius:24px;margin-right:16px;" />
             {{user.displayName != undefined ? user.displayName : 'Konto'}}
         </a>
-        <a routerLink="/account/logout" class="navbar-link link-darkblue" (click)="onMenuClick()">            
-            Wyloguj się  
+        <a routerLink="/account/logout" class="navbar-link link-darkblue" (click)="onMenuClick()">
+            Wyloguj się
         </a>
     </div>
     <ng-template #showLogin>
@@ -49,13 +45,12 @@
             <a routerLink="/account/login" class="navbar-link" (click)="onMenuClick()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 4C13.0609 4 14.0783 4.42143 14.8284 5.17157C15.5786 5.92172 16 6.93913 16 8C16 9.06087 15.5786 10.0783 14.8284 10.8284C14.0783 11.5786 13.0609 12 12 12C10.9391 12 9.92172 11.5786 9.17157 10.8284C8.42143 10.0783 8 9.06087 8 8C8 6.93913 8.42143 5.92172 9.17157 5.17157C9.92172 4.42143 10.9391 4 12 4V4ZM12 14C16.42 14 20 15.79 20 18V20H4V18C4 15.79 7.58 14 12 14Z" fill="#242985"/>
-                </svg>                    
+                </svg>
                 Zaloguj
             </a>
-            <a routerLink="/account/signup" class="navbar-link link-darkblue" (click)="onMenuClick()">            
-                Załóż konto  
+            <a routerLink="/account/signup" class="navbar-link link-darkblue" (click)="onMenuClick()">
+                Załóż konto
             </a>
         </div>
     </ng-template>
-
 </nav>

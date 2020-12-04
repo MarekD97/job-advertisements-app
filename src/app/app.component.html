@@ -1,38 +1,3 @@
-<!-- <mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon routerLink="/">menu</mat-icon>
-  </button>
-  <span>{{text.title}}</span>
-  <span class="toolbar-spacer"></span>
-  <span *ngIf="fs.auth.user | async as user; else showLogin">
-    <button *ngIf="user.displayName != undefined; else userName;" mat-button routerLink="/account/profile" routerLinkActive="active">
-      <img src="{{user.photoURL}}" alt="Picture" style="width: 40px; border-radius: 20px; margin-right: 8px;">
-        {{user.displayName}}
-    </button>
-    <ng-template #userName>
-      <button mat-button routerLink="/account/profile" routerLinkActive="active">
-        Konto użytkownika
-      </button>
-    </ng-template>
-    <button mat-button (click)="signOut()">{{text.signOut}}</button>
-  </span>
-  <ng-template #showLogin>
-    <button mat-button routerLink="/login" routerLinkActive="active">{{text.login}}</button>
-    <button mat-button routerLink="/signup" routerLinkActive="active">{{text.signUp}}</button>
-  </ng-template>
-</mat-toolbar> -->
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
 <app-footer></app-footer>
-<!-- <footer>
-  <ul>
-    <li>Strona główna</li>
-    <li>Kategorie</li>
-    <li>Informacje</li>
-    <li>Kontakt</li>
-  </ul>
-  <mat-icon>facebook</mat-icon>
-  <mat-icon>pets</mat-icon>
-  <mat-icon>stars</mat-icon>
-  © 2020 Praca dla młodych
-</footer> -->

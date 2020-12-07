@@ -4,18 +4,29 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 
+const firebaseErrors = {
+  'auth/too-many-requests': 'Zarejestrowano nietypową aktywność. Spróbuj ponownie później.',
+  'auth/unauthorized-domain': 'Nieautoryzowana domena.',
+  'auth/user-not-found': 'Użytkownik o takim adresie e-mail nie istnieje',
+  'auth/user-disabled': 'Użytkownik zablokowany przez administratora.',
+  'auth/weak-password': 'Hasło musi się składać z przynajmniej 6 znaków!',
+  'auth/email-already-in-use': 'Ten adres e-mail jest aktualnie używany przez inne konto.',
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
   isLogged = false;
   currentUser: any;
+  errorMessage: any;
   constructor(public fs: AngularFirestore, public auth: AngularFireAuth) {
     auth.onAuthStateChanged((user) => {
-      // console.log(user);
       if (user) {
         this.currentUser = user;
-        // console.log(this.currentUser)
+        this.isLogged = true;
+      } else {
+        this.isLogged = false;
       }
     });
   }
@@ -23,7 +34,7 @@ export class FirebaseService {
   // Sign in existing users
   async signIn(email: string, password: string): Promise<boolean> {
     try {
-      if(!email || !password) {
+      if (!email || !password) {
         throw new Error('Invalid email and/or password');
       }
       await this.auth.signInWithEmailAndPassword(email, password)
@@ -32,7 +43,8 @@ export class FirebaseService {
       });
       return true;
     } catch (error) {
-      console.log('Sign in failed', error);
+      console.log(error);
+      this.errorMessage = firebaseErrors[error.code];
       return false;
     }
   }
@@ -40,7 +52,7 @@ export class FirebaseService {
   // Sign up new users
   async signUp(email: string, password: string): Promise<any> {
     try {
-      if(!email || !password) {
+      if (!email || !password) {
         throw new Error('Invalid email and/or password');
       }
       await this.auth.createUserWithEmailAndPassword(email, password)
@@ -53,7 +65,8 @@ export class FirebaseService {
       console.log('Sign in success');
       return true;
     } catch (error) {
-      return error;
+      this.errorMessage = firebaseErrors[error.code];
+      return false;
     }
   }
 
@@ -64,31 +77,35 @@ export class FirebaseService {
         this.isLogged = false;
       });
       return true;
-    } catch(error) {
-      console.log('Sign out failed', error);
+    } catch (error) {
+      this.errorMessage = firebaseErrors[error.code];
       return false;
     }
   }
 
-  async signInWithGoogle(): Promise<void> {
+  async signInWithGoogle(): Promise<boolean> {
     try {
       await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
       this.auth.onAuthStateChanged((user) => {
         this.currentUser = user;
       });
+      return true;
     } catch (error) {
-      console.log('Login with Google failed', error);
+      this.errorMessage = firebaseErrors[error.code];
+      return false;
     }
   }
 
-  async signInWithFacebook(): Promise<void> {
+  async signInWithFacebook(): Promise<boolean> {
     try {
       await this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
       this.auth.onAuthStateChanged((user) => {
         this.currentUser = user;
       });
+      return true;
     } catch (error) {
-      console.log('Login with Facebook failed', error);
+      this.errorMessage = firebaseErrors[error.code];
+      return false;
     }
   }
 
@@ -112,7 +129,7 @@ export class FirebaseService {
     return this.fs.collection('users').doc(this.currentUser.uid).valueChanges();
   }
 
-  getAuthorData(userId): Observable<any> {
+  getAuthorData(userId: string): Observable<any> {
     return this.fs.collection('users').doc(userId).valueChanges();
   }
 
@@ -123,8 +140,6 @@ export class FirebaseService {
   createNewAdvertisement(advertisement: object): void {
     this.fs.collection('advertisements').add(advertisement);
   }
-
-  // message services
 
   sendMessage(receiverId: string, senderId: string, advertisementId: string, content: string): void {
     const data = {

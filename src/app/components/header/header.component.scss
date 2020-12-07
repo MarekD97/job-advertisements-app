@@ -7,29 +7,28 @@ $secondary-color: #F8931F;
     align-items: center;
     text-align: center;
     position: relative;
-    h1 {
-        margin: 0 20px;
-    }
+    padding: 12px 22px;
     h2 {
-        color: $secondary-color;
-        margin: 39px 20px 16px;
+      margin-bottom: 12px;
     }
     &-content {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
-        margin: 40px 0;
+        margin: 16px 0;
     }
     &-object {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 10px 0;
+        padding: 8px;
         transition: transform .6s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-        &-title {
-            font-size: 18px;
-            margin: 20px 0;
-            color: $primary-color;
+        p {
+          margin: 16px 0;
+        }
+        svg {
+          height: 96px;
+          width: auto;
         }
         &:hover {
             transform: scale(1.4);
@@ -39,31 +38,28 @@ $secondary-color: #F8931F;
         position: absolute;
         z-index: -1;
         width: 100%;
-        bottom: 25%;
+        bottom: 0;
     }
 }
 
 @media only screen and (min-width: 960px) {
     .header {
-        h1 {
-            margin: 0 auto;
-        }
-        h2 {
-            margin: 42px auto;
-            font-size: 24px;
-        }
+        padding: 32px 44px;
         &-content {
             flex-direction: row;
             width: 100%;
-            margin: 72px 0;
+            margin: 44px 0;
         }
-        &-object-title {
-            font-size: 24px;
+        &-object {
+          padding: 16px;
+          svg {
+            height: 128px;
+          }
         }
         .watermark {
             width: auto;
-            height: 130%;
-            bottom: 0;
+            height: 150%;
+            bottom: -25%;
             right: 0;
         }
     }

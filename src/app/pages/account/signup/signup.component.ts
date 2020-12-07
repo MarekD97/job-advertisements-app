@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit {
 
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router ) {
     fs.auth.onAuthStateChanged((user) => {
-      if(user) {
+      if (user) {
         this.router.navigate(['/account/settings']);
       }
     });
@@ -23,39 +23,43 @@ export class SignupComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       confirmPassword: new FormControl('', [Validators.required])
-    })
+    });
   }
 
   ngOnInit(): void {
 
   }
 
-  signUpWithEmail(fg: FormGroup): void {
-    if(fg.value.password === fg.value.confirmPassword) {
-      this.fs.signUp(fg.value.email, fg.value.password).then(status => {
-        if(status!=true) {
-          switch(status.code) {
-            case 'auth/weak-password':
-              this.status = 'Hasło musi się składać z przynajmniej 6 znaków!';
-              break;
-            case 'auth/email-already-in-use':
-              this.status = 'Ten adres e-mail jest aktualnie używany przez inne konto.';
-              break;
-            default:
-              this.status = 'Wystąpił nieoczekiwany błąd.';
-              break;
-          }
+  async signUpWithEmail(fg: FormGroup): Promise<void> {
+    try {
+      if (!fg.valid) {
+        if (fg.value.password.length < 6) {
+          throw new Error('Hasło musi się składać z przynajmniej 6 znaków!');
         } else {
+          throw new Error('Nieprawidłowe dane w formularzu');
+        }
+      }
+      if (fg.value.password !== fg.value.confirmPassword) {
+        throw new Error('Hasła nie są identyczne!');
+      }
+      await this.fs.signUp(fg.value.email, fg.value.password).then(result => {
+        if (result) {
           this.router.navigate(['/account/profile']);
+        } else {
+          throw new Error(this.fs.errorMessage);
         }
       });
-    } else {
-      this.status = 'Hasła nie pasują do siebie!';
+    } catch (error) {
+      this.status = error.message;
     }
   }
 
   onSignInWithGoogleClick(): void {
     this.fs.signInWithGoogle();
+  }
+
+  onSignInWithFacebookClick(): void {
+    this.fs.signInWithFacebook();
   }
 
 }

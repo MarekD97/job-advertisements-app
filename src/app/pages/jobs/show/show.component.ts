@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import * as moment from 'moment';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-show',
@@ -9,38 +11,33 @@ import { FirebaseService } from 'src/app/services/firebase.service';
   styleUrls: ['./show.component.scss']
 })
 export class ShowJobComponent implements OnInit {
-  private routeSub: Subscription;
   public jobId: string;
-  public jobData: any = {
-    image: ''
-  };
-  public jobAuthor: any = {
-    firstname: '',
-    lastname: '',
-    phoneNumber: '',
-    image: {
-      url: ''
-    }
-  };
-  constructor(public fs: FirebaseService, public router: Router, private route: ActivatedRoute) {
-
-  }
-
-  ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe((params) => {
+  public jobData: any;
+  public isPhoneNumberVisible = false;
+  constructor(public fs: FirebaseService, public router: Router, private route: ActivatedRoute, private location: Location) {
+    this.route.params.subscribe((params) => {
       this.jobId = params.id;
     });
     this.fs.getAdvertisement(this.jobId).subscribe(data => {
       this.jobData = data;
       this.fs.getAuthorData(this.jobData.userAccountId).subscribe(author => {
-        this.jobAuthor = author;
+        this.jobData.author = author;
       });
     });
 
   }
 
-  ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
+  ngOnInit(): void {
+  }
+
+  formatDate(): string {
+    moment.locale('pl');
+    const date = moment(this.jobData.updatedAt.toDate());
+    return date.format('HH:mm, DD MMMM yyyy');
+  }
+
+  showPhoneNumber() {
+    this.isPhoneNumberVisible = true;
   }
 
 

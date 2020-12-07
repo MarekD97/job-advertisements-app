@@ -33,11 +33,11 @@ export class ProfileComponent implements OnInit {
       })
     });
     this.fs.auth.onAuthStateChanged((user) => {
-      if(user) {
+      if (user) {
         this.fsDataSub = this.fs.getProfileData().subscribe(data => {
           this.fsData = data;
           this.profileForm.patchValue(data);
-        })
+        });
       } else {
         router.navigate(['/']);
       }
@@ -54,8 +54,8 @@ export class ProfileComponent implements OnInit {
       userState.updateProfile({
         displayName: `${fg.value.firstname} ${fg.value.lastname}`,
         photoURL: this.photoURL
-      })
-    })
+      });
+    });
   }
 
   onFileSelected(event): void {
@@ -64,37 +64,36 @@ export class ProfileComponent implements OnInit {
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
     task.snapshotChanges().pipe(
-      finalize(()=> {
+      finalize(() => {
         fileRef.getDownloadURL().subscribe(url => {
-          if(url) {
+          if (url) {
             this.photoURL = url;
-            console.log(url)
           }
         });
       })
     ).subscribe(() => {
       fileRef.getDownloadURL().subscribe(url => {
-        if(url) {
+        if (url) {
           this.photoURL = url;
           this.profileForm.patchValue({
             image: {
               url: this.photoURL
             }
           });
-          console.log(url)
+          console.log(url);
         }
       });
-    })
+    });
   }
 
   loadPicture(): void {
     const filePath = `userPicture/${this.fs.currentUser.uid}`;
     const fileRef = this.storage.ref(filePath);
     fileRef.getDownloadURL().subscribe(url => {
-      if(url) {
+      if (url) {
         this.photoURL = url.toString();
       }
-    })
+    });
   }
 
 }

@@ -10,9 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public userAuth: Subscription;
-  public isEmailWindowOpened = false;
+
   public loginForm: FormGroup;
+  public status: string;
+
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router) {
     fs.auth.onAuthStateChanged((user) => {
       if (user) {
@@ -22,26 +23,26 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
-    })
+    });
    }
 
   ngOnInit(): void {
   }
 
-  async loginWithEmail(fg: FormGroup): Promise<void>{
+  async loginWithEmail(fg: FormGroup): Promise<void> {
     try {
       if (!fg.valid) {
-        throw new Error('Invalid sign-in credentials');
+        throw new Error('Nieprawidłowe dane w formularzu');
       }
-      const result = await this.fs.signIn(fg.value.email, fg.value.password);
-      console.log('that tickles', result);
-      if (result) {
-        this.router.navigate([ 'tasks' ]);
-      } else {
-        throw new Error('Sign-in failed');
-      }
+      await this.fs.signIn(fg.value.email, fg.value.password).then(result => {
+        if (result) {
+          this.router.navigate(['/account/settings']);
+        } else {
+          throw new Error(this.fs.errorMessage);
+        }
+      });
     } catch (error) {
-        console.log(error);
+      this.status = error.message;
     }
   }
 
@@ -51,10 +52,6 @@ export class LoginComponent implements OnInit {
 
   onSignInWithFacebookClick(): void {
     this.fs.signInWithFacebook();
-  }
-
-  openEmailWindow(): void {
-    this.isEmailWindowOpened = true;
   }
 
 }

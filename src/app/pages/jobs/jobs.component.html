@@ -1,19 +1,16 @@
-<div class="wrapper">
-    <div *ngFor="let item of dataList | slice:0:10" class="element">
-        <a [routerLink]="['/jobs/', item.id]">
-            <h1>{{item.title}}</h1>
-            <img 
-                src="{{item.image.url}}" 
-                alt="{{item.image.alt}}">
-            <div class="element-author">
-                <img 
-                    src="{{item.author.image.url}}" 
-                    alt="{{item.author.firstname}} {{item.author.lastname}}">
-                <h2>{{item.author.firstname}} {{item.author.lastname}}</h2>
-            </div>
-            <p>{{item.detail}}</p>
-        </a>
-        <hr class="element-line"/>
-        <p>Opublikowano: {{item.updatedAt.toDate() | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+<div *ngFor="let item of dataList | slice:0:10" class="container" [routerLink]="['/jobs/', item.id]">
+    <div class="job-image">
+      <img class="image-offer" src="{{item.image.url}}" alt="Ogłosznie">
+    </div>
+    <div class="job-header">
+      <p class="p-large p-bold">{{item.title}}</p>
+      <p class="p-medium p-bold">{{item.expectedPrice}} zł / godz.</p>
+    </div>
+    <div class="job-content">
+      <p class="p-small">Opublikowano: {{formatDate(item.updatedAt)}}</p>
+      <div class="job-category">
+        <p class="badge" style="margin-right: 14px;">{{item.category}}</p>
+        <p *ngIf="item.isAgeOfMajorityRequired" class="badge">18+</p>
+      </div>
     </div>
 </div>

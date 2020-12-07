@@ -3,27 +3,21 @@ $secondary-color: #F8931F;
 
 .footer {
     background-color: $primary-color;
-    &-start {
-        display: flex;
-        flex-direction: column;
-        padding: 32px 22px;
-        h1, a {
-            color: white;
-            font-size: 18px;
-            margin: 20px 0;
-        }
-        a {
-            text-decoration: none;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
+    padding: 20px 22px;
+    text-align: center;
+    p, a {
+      color: white;
+      margin: 8px 0;
+      text-decoration: none;
     }
-    &-end {
-        width: 100%;
-        text-align: center;
-        color: white;
-        padding: 20px;
+    a:hover {
+      text-decoration: underline;
+    }
+    span {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 24px;
+      text-align: left;
     }
 }
 

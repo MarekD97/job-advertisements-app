@@ -29,9 +29,9 @@
             <input type="checkbox" name="isAgeOfMajorityRequired" formControlName="isAgeOfMajorityRequired">
             <h3>Szczegółowy opis</h3>
             <textarea row="4" name="detail" formControlName="detail"></textarea>
-            <button (click)="createAdvertisement(newJobForm, false)">Tylko zapisz</button>
-            <button (click)="createAdvertisement(newJobForm, true)">Zapisz i opublikuj</button>
-            <button routerLink="/account/settings" class="cancel">Anuluj</button>
+            <button (click)="createAdvertisement(newJobForm, false)" class="button">Tylko zapisz</button>
+            <button (click)="createAdvertisement(newJobForm, true)" class="button">Zapisz i opublikuj</button>
+            <button routerLink="/account/settings" class="button button-cancel">Anuluj</button>
         </div>
 
     </form>

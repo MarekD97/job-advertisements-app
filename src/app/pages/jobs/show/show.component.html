@@ -21,10 +21,13 @@
         style="margin-right: 16px;"
         src="{{jobData.author.image.url}}"
         alt="Autor">
-      <p class="p-medium p-bold">{{jobData.author.firstname}} {{jobData.author.lastname}}</p>
+      <p class="p-medium p-bold">
+        {{jobData.author.firstname}} {{jobData.author.lastname}}
+        {{fs.currentUser !== undefined && jobData.userAccountId == fs.currentUser.uid ? '(Ty)' : ''}}
+      </p>
     </div>
-    <div class="job-author-content">
-      <button class="button" style="margin-right: 16px;">
+    <div *ngIf="fs.currentUser === undefined || jobData.userAccountId != fs.currentUser.uid" class="job-author-content">
+      <button (click)="showMessageForm()" class="button" style="margin-right: 16px;">
         Wiadomość
       </button>
       <a (click)="showPhoneNumber()" [href]="'tel:' + jobData.author.phoneNumber" class="button">
@@ -36,5 +39,12 @@
         </ng-template>
       </a>
     </div>
+    <app-message-form
+      *ngIf="fs.currentUser !== undefined && isMessageFormVisible"
+      (cancelClick)="hideMessageForm()"
+      [advertisementId]="jobId"
+      [receiverId]="jobData.userAccountId"
+      messageTo="{{jobData.author.firstname}} {{jobData.author.lastname}}">
+    </app-message-form>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
@@ -11,7 +11,9 @@ export class MessageFormComponent implements OnInit {
   @Input() messageTo: string;
   @Input() receiverId: string;
   @Input() advertisementId: string;
+  @Output() public cancelClick: EventEmitter<any> = new EventEmitter();
   messageForm: FormGroup;
+  public sendStatus = false;
   constructor(public fs: FirebaseService, public fb: FormBuilder) {
     fs.auth.onAuthStateChanged((user) => {
       if (!user) {
@@ -27,11 +29,12 @@ export class MessageFormComponent implements OnInit {
   }
 
   onCancelClick(): void {
-    console.log('cancel');
+    this.cancelClick.emit();
   }
 
   sendMessage(fg: FormGroup): void {
     this.fs.sendMessage(this.receiverId, this.fs.currentUser.uid, this.advertisementId, fg.value.content);
+    this.sendStatus = true;
   }
 
 }

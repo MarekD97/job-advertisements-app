@@ -1,3 +1,5 @@
+import { finalize } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,7 +12,19 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 export class NewJobComponent implements OnInit {
   newJobForm: FormGroup;
-  constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router) {
+  public categories = [
+    'Sprzątanie',
+    'Opieka nad zwierzętami',
+    'Opieka nad dziećmi',
+    'Opieka nad osobami niepełnosprawnymi',
+    'Ogrodnictwo',
+    'Udzielanie korepetycji',
+    'Transport',
+    'Praca sezonowa',
+    'Inne'
+  ];
+  photoURL: string;
+  constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router, private storage: AngularFireStorage) {
     fs.auth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/account/login']);
@@ -39,12 +53,39 @@ export class NewJobComponent implements OnInit {
       updatedAt: new Date(),
       userAccountId: this.fs.currentUser.uid,
       isActive: isPublished,
-    }
+      image: {
+        url: this.photoURL
+      }
+    };
     this.fs.createNewAdvertisement(newAdvertisement);
   }
 
   onFileSelected(event: any): void {
-
+    const file = event.target.files[0];
+    const filePath = `jobsPicture/${Date.now()}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+    task.snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe(url => {
+          if (url) {
+            this.photoURL = url;
+          }
+        });
+      })
+    ).subscribe(() => {
+      fileRef.getDownloadURL().subscribe(url => {
+        if (url) {
+          this.photoURL = url;
+          this.newJobForm.patchValue({
+            image: {
+              url: this.photoURL
+            }
+          });
+          console.log(url);
+        }
+      });
+    });
   }
 
 }

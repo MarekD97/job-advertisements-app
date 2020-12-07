@@ -5,6 +5,7 @@
             <h3>Tytuł ogłoszenia</h3>
             <input type="text" name="title" formControlName="title">
             <h3>Zdjęcie</h3>
+            <img *ngIf="photoURL!==undefined" src="{{photoURL}}" alt="Zdjęcie">
             <label for="fileInput" class="button">
                 <input id="fileInput" type="file" #userPhoto (change)="onFileSelected($event)" style="display:none">
                 Wybierz
@@ -13,15 +14,7 @@
         <div class="column">
             <h3>Kategoria</h3>
             <select name="category" formControlName="category">
-                <option value="cleaning">Sprzątanie</option>
-                <option value="childcare">Opieka nad zwierzętami</option>
-                <option value="animalscare">Opieka nad dziećmi</option>
-                <option value="disabledcare">Opieka nad osobami niepełnosprawnymi</option>
-                <option value="gardening">Ogrodnictwo</option>
-                <option value="privatelessons">Udzielanie korepetycji</option>
-                <option value="transport">Transport</option>
-                <option value="seasonwork">Praca sezonowa</option>
-                <option value="others">Inne</option>
+              <option *ngFor="let categoryItem of categories" value="{{categoryItem}}">{{categoryItem}}</option>
             </select>
             <h3>Wynagrodzenie za pracę</h3>
             <input type="text" name="expectedPrice" formControlName="expectedPrice">

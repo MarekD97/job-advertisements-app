@@ -1,4 +1,5 @@
 <form
+  *ngIf="!sendStatus; else showAlert"
   [formGroup]="messageForm"
   (ngSubmit)="sendMessage(messageForm)">
     <h1>Wiadomość do: {{messageTo}}</h1>
@@ -8,3 +9,6 @@
         <input type="submit" value="Wyślij">
     </span>
 </form>
+<ng-template #showAlert>
+  <h1>Pomyślnie wysłano</h1>
+</ng-template>

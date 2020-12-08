@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <p class="p-large p-bold">Filtry</p>
+    <div class="column">
+      <label for="category-select">Kategoria</label>
+      <select name="category" formControlName="category" id="category-select" (change)="filterCategoryChange($event)">
+        <option value="all" [selected]="true">Wszystkie</option>
+        <option *ngFor="let categoryItem of categories" value="{{categoryItem}}">{{categoryItem}}</option>
+      </select>
+    </div>
+    <div class="column">
+      <label for="age-select">Dla niepełnoletnich</label>
+      <input type="checkbox" name="age" id="age-select" (change)="filterAgeChange($event)">
+    </div>
+  </div>
+  <div class="row">
+    <p class="p-large p-bold">Sortuj</p>
+    <div class="column">
+      <select name="sort" (change)="sortChange($event)">
+        <option value="latest">Od najnowszych</option>
+        <option value="oldest">Od najstarszych</option>
+        <option value="alphabetically">Alfabetycznie</option>
+        <option value="highest">Od najwyżego wynagrodzenia</option>
+      </select>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 export class NewJobComponent implements OnInit {
   newJobForm: FormGroup;
-  public categories = [
+  public categories: string[] = [
     'Sprzątanie',
     'Opieka nad zwierzętami',
     'Opieka nad dziećmi',
@@ -58,6 +58,7 @@ export class NewJobComponent implements OnInit {
       }
     };
     this.fs.createNewAdvertisement(newAdvertisement);
+    this.router.navigate(['/account/settings']);
   }
 
   onFileSelected(event: any): void {

@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   public status: string;
 
   constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router) {
-    fs.auth.onAuthStateChanged((user) => {
+    this.fs.auth.onAuthStateChanged(user => {
       if (user) {
         this.router.navigate(['/account/settings']);
       }

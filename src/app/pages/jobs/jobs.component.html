@@ -1,3 +1,8 @@
+<app-toolbar
+  (filterCategory)="filterCategory($event)"
+  (filterAge)="filterAge($event)"
+  (sortType)="sortData($event)">
+</app-toolbar>
 <div *ngFor="let item of dataList | slice:0:10" class="container" [routerLink]="['/jobs/', item.id]">
     <div class="job-image">
       <img class="image-offer" src="{{item.image.url}}" alt="Ogłosznie">

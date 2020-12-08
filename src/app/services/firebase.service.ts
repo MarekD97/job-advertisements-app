@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 
@@ -74,7 +74,10 @@ export class FirebaseService {
     try {
       await this.auth.signOut()
       .then(res => {
-        this.isLogged = false;
+        this.auth.onAuthStateChanged((user) => {
+          this.currentUser = user;
+          this.isLogged = false;
+        });
       });
       return true;
     } catch (error) {
@@ -85,9 +88,12 @@ export class FirebaseService {
 
   async signInWithGoogle(): Promise<boolean> {
     try {
-      await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-      this.auth.onAuthStateChanged((user) => {
-        this.currentUser = user;
+      await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(res => {
+        this.auth.onAuthStateChanged((user) => {
+          this.currentUser = user;
+          this.isLogged = true;
+        });
       });
       return true;
     } catch (error) {
@@ -98,9 +104,12 @@ export class FirebaseService {
 
   async signInWithFacebook(): Promise<boolean> {
     try {
-      await this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
-      this.auth.onAuthStateChanged((user) => {
-        this.currentUser = user;
+      await this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .then(res => {
+        this.auth.onAuthStateChanged((user) => {
+          this.currentUser = user;
+          this.isLogged = true;
+        });
       });
       return true;
     } catch (error) {
@@ -125,6 +134,11 @@ export class FirebaseService {
     return this.fs.collection('advertisements').doc(id).valueChanges();
   }
 
+  getUserAdvertisements(): Observable<any> {
+    const userAdvertisements = this.fs.collection('advertisements', ref => ref.where('userAccountId', '==', this.currentUser.uid));
+    return userAdvertisements.valueChanges({idField: 'id'});
+  }
+
   getProfileData(): Observable<any> {
     return this.fs.collection('users').doc(this.currentUser.uid).valueChanges();
   }
@@ -146,7 +160,8 @@ export class FirebaseService {
       receiverId,
       senderId,
       advertisementId,
-      content
+      content,
+      createdAt: Date.now()
     };
     this.fs.collection('messages').add(data);
   }

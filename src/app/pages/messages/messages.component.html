@@ -1,8 +1,9 @@
 <div>
   <div *ngFor="let item of messagesList">
-    <h1>Wiadomość od: {{item.senderId}}</h1>
+    <h1>Wiadomość od: {{item.sender!==undefined ? item.sender.firstname+' '+item.sender.lastname : ''}}</h1>
     <h2>Ogłoszenie: {{item.advertisement!==undefined ? item.advertisement.title : ''}}</h2>
     <a [routerLink]="['/jobs/', item.advertisementId]">Link</a>
     <p>Treść: {{item.content}}</p>
+    <p>Napisano: {{item.createdAt!==undefined ? formatDate(item.createdAt) : ''}}</p>
   </div>
 </div>

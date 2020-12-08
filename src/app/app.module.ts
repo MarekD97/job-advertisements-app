@@ -29,6 +29,7 @@ import { ShowJobComponent } from './pages/jobs/show/show.component';
 import { JobsComponent } from './pages/jobs/jobs.component';
 import { MessageFormComponent } from './components/message-form/message-form.component';
 import { MessagesComponent } from './pages/messages/messages.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { MessagesComponent } from './pages/messages/messages.component';
     JobsComponent,
     MessageFormComponent,
     MessagesComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,

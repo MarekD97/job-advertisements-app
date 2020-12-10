@@ -30,6 +30,8 @@ import { JobsComponent } from './pages/jobs/jobs.component';
 import { MessageFormComponent } from './components/message-form/message-form.component';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ListItemComponent } from './components/list-item/list-item.component';
+import { SettingsBarComponent } from './components/settings-bar/settings-bar.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     MessageFormComponent,
     MessagesComponent,
     ToolbarComponent,
+    ListItemComponent,
+    SettingsBarComponent,
   ],
   imports: [
     BrowserModule,

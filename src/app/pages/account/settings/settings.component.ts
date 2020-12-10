@@ -8,19 +8,20 @@ import * as moment from 'moment';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  public jobData: any;
+  public data: any;
   constructor(public fs: FirebaseService) {
-    if (this.fs.currentUser) {
+    this.fs.auth.onAuthStateChanged(user => {
       this.fs.getUserAdvertisements().subscribe(data => {
-        this.jobData = data;
+        this.data = data;
       });
-    }
+    })
   }
 
   ngOnInit(): void {
+
   }
 
-  formatDate(dateToFormat): string {
+  formatDate(dateToFormat: any): string {
     moment.locale('pl');
     const date = moment(dateToFormat.toDate());
     return date.format('HH:mm, DD MMMM yyyy');

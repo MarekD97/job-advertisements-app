@@ -37,28 +37,33 @@ export class NewJobComponent implements OnInit {
       isAgeOfMajorityRequired: new FormControl('', [Validators.required]),
       detail: new FormControl('', [Validators.required]),
     });
+    this.photoURL = 'https://firebasestorage.googleapis.com/v0/b/praca-dla-mlodych.appspot.com/o/assets%2Flogo.png?alt=media&token=11411bbd-6d70-4b96-8c2c-67fb3ec24b24';
   }
 
   ngOnInit(): void {
   }
 
   createAdvertisement(fg: FormGroup, isPublished: boolean): void {
-    const newAdvertisement = {
-      title: fg.value.title,
-      category: fg.value.category,
-      expectedPrice: fg.value.expectedPrice,
-      isAgeOfMajorityRequired: fg.value.isAgeOfMajorityRequired,
-      detail: fg.value.detail,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      userAccountId: this.fs.currentUser.uid,
-      isActive: isPublished,
-      image: {
-        url: this.photoURL
-      }
-    };
-    this.fs.createNewAdvertisement(newAdvertisement);
-    this.router.navigate(['/account/settings']);
+    if(fg.valid) {
+      const newAdvertisement = {
+        title: fg.value.title,
+        category: fg.value.category,
+        expectedPrice: fg.value.expectedPrice,
+        isAgeOfMajorityRequired: fg.value.isAgeOfMajorityRequired,
+        detail: fg.value.detail,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userAccountId: this.fs.currentUser.uid,
+        isActive: isPublished,
+        image: {
+          url: this.photoURL
+        }
+      };
+      this.fs.createNewAdvertisement(newAdvertisement);
+      this.router.navigate(['/account/settings']);
+    } else {
+      alert('Nie podano wszystkich danych!');
+    }
   }
 
   onFileSelected(event: any): void {

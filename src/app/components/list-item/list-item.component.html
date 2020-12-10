@@ -1,0 +1,27 @@
+<div class="item">
+  <div class="item-content">
+    <img class="image-offer" src="{{item.image.url}}" alt="Ogłosznie">
+    <div class="item-detail">
+      <p class="p-large p-bold">{{item.title}}</p>
+      <p class="p-medium p-bold">{{item.expectedPrice}} zł / godz.</p>
+      <div class="item-category">
+        <p class="badge" style="margin-right: 14px;">{{item.category}}</p>
+        <p *ngIf="item.isAgeOfMajorityRequired" class="badge">18+</p>
+      </div>
+      <p class="p-medium">{{item.detail}}</p>
+    </div>
+  </div>
+  <div class="item-cover">
+    <p *ngIf="item.isActive; else unpublished" class="p-medium p-white">Opublikowano {{formatDate(item.updatedAt)}}</p>
+    <ng-template #unpublished>
+      <p class="p-medium p-white" >Zapisano {{formatDate(item.updatedAt)}}, nieopublikowano</p>
+    </ng-template>
+    <div *ngIf="fs.currentUser !== undefined && item.userAccountId === fs.currentUser.uid; else showDetails">
+      <button class="button button-cancel">Usuń</button>
+      <button class="button" style="margin-left: 16px;">Edytuj</button>
+    </div>
+    <ng-template #showDetails>
+      <a [routerLink]="['/jobs/', item.id]" class="button">Szczegóły</a>
+    </ng-template>
+  </div>
+</div>

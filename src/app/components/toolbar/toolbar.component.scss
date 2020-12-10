@@ -1,14 +1,29 @@
+$primary-color: #242985;
+$secondary-color: #F8931F;
+
 .container {
   display: flex;
   flex-direction: column;
-  background-color: #FFFAF5;
+  background-color: $primary-color;
+  // background-color: white;
+  padding: 0 44px;
+  color: white;
 }
 .row {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 .column {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 0 16px;
 }
+
+p, label {
+  color: white;
+}
+
+

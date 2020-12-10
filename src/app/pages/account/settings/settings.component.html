@@ -1,27 +1,7 @@
-<div>
-  <h2>Ustawienia konta</h2>
-  <h1>Dostępne akcje</h1>
-  <button routerLink="/account/profile" class="button">Edytuj profil</button>
-  <button routerLink="/jobs/new" class="button">Dodaj ogłoszenie</button>
-  <button routerLink="/messages" class="button">Wiadomości</button>
-</div>
-<div>
-  <div *ngFor="let item of jobData" class="container" [routerLink]="['/jobs/', item.id]">
-    <div class="job-image">
-      <img class="image-offer" src="{{item.image.url}}" alt="Ogłosznie">
-    </div>
-    <div class="job-header">
-      <p class="p-large p-bold">{{item.title}}</p>
-      <p class="p-medium p-bold">{{item.expectedPrice}} zł / godz.</p>
-    </div>
-    <div class="job-content">
-      <p class="p-small">Opublikowano: {{formatDate(item.updatedAt)}}</p>
-      <div class="job-category">
-        <p class="badge" style="margin-right: 14px;">{{item.category}}</p>
-        <p *ngIf="item.isAgeOfMajorityRequired" class="badge">18+</p>
-      </div>
-    </div>
-    <button class="button">Edytuj</button>
-    <button class="button button-cancel">Usuń</button>
-</div>
-</div>
+<h2 class="h-medium">Zarządzanie kontem</h2>
+<app-settings-bar></app-settings-bar>
+<div class="topbar"></div>
+<app-list-item *ngFor="let item of data" [item]="item">
+</app-list-item>
+<h1 *ngIf="data === undefined || data.length === 0" class="h-large">Brak ogłoszeń</h1>
+

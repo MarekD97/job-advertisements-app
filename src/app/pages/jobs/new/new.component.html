@@ -1,31 +1,49 @@
-<div>
-    <h2>Dodaj nowe ogłoszenie</h2>
-    <form [formGroup]="newJobForm" method="POST">
-        <div class="column">
-            <h3>Tytuł ogłoszenia</h3>
-            <input type="text" name="title" formControlName="title">
-            <h3>Zdjęcie</h3>
-            <img *ngIf="photoURL!==undefined" src="{{photoURL}}" alt="Zdjęcie">
-            <label for="fileInput" class="button">
-                <input id="fileInput" type="file" #userPhoto (change)="onFileSelected($event)" style="display:none">
-                Wybierz
-            </label>
+<h2 class="h-medium">Dodaj nowe ogłoszenie</h2>
+<app-settings-bar></app-settings-bar>
+<div class="topbar"></div>
+<form [formGroup]="newJobForm" method="POST" class="form row">
+    <div class="column">
+        <label for="job-title" class="form-label">
+          <span class="form-text">Tytuł ogłoszenia</span>
+          <input type="text" name="title" formControlName="title" id="job-title" class="form-input">
+        </label>
+        <label for="job-image" class="form-label">
+          <span class="form-text">Zdjęcie</span>
+          <img *ngIf="photoURL!==undefined; else templateImage" src="{{photoURL}}" alt="Zdjęcie" class="image-offer" style="align-self: center;">
+          <ng-template #templateImage>
+            <img src="https://firebasestorage.googleapis.com/v0/b/praca-dla-mlodych.appspot.com/o/assets%2Flogo.png?alt=media&token=11411bbd-6d70-4b96-8c2c-67fb3ec24b24"
+            alt="Zdjęcie" class="image-offer" style="align-self: center;">
+          </ng-template>
+          <label for="fileInput" class="button">
+            <input id="fileInput" type="file" #userPhoto (change)="onFileSelected($event)" style="display:none">
+              Wybierz
+          </label>
+        </label>
+    </div>
+    <div class="column">
+        <label for="job-category" class="form-label">
+          <span class="form-text">Kategoria</span>
+          <select name="category" formControlName="category" id="job-category" class="form-input">
+            <option *ngFor="let categoryItem of categories" value="{{categoryItem}}">{{categoryItem}}</option>
+          </select>
+        </label>
+        <label for="job-price" class="form-label">
+          <span class="form-text">Wynagrodzenie za pracę</span>
+          <input type="text" name="expectedPrice" formControlName="expectedPrice" id="job-price" class="form-input">
+        </label>
+        <label for="job-age" class="form-label" style="flex-direction: row; align-items: center;">
+          <span class="form-text">Czy pełnoletność jest wymagana?</span>
+          <input type="checkbox" name="isAgeOfMajorityRequired" formControlName="isAgeOfMajorityRequired" id="job-age" class="form-input">
+          <div class="checkbox"></div>
+        </label>
+        <label for="job-detail" class="form-label">
+          <span class="form-text">Szczegółowy opis</span>
+          <textarea row="4" name="detail" formControlName="detail" id="job-detail" class="form-input"></textarea>
+        </label>
+        <div class="button-wrapper">
+          <button (click)="createAdvertisement(newJobForm, true)" class="button">Zapisz i opublikuj</button>
+          <button (click)="createAdvertisement(newJobForm, false)" class="button">Tylko zapisz</button>
+          <button routerLink="/account/settings" class="button button-cancel">Anuluj</button>
         </div>
-        <div class="column">
-            <h3>Kategoria</h3>
-            <select name="category" formControlName="category">
-              <option *ngFor="let categoryItem of categories" value="{{categoryItem}}">{{categoryItem}}</option>
-            </select>
-            <h3>Wynagrodzenie za pracę</h3>
-            <input type="text" name="expectedPrice" formControlName="expectedPrice">
-            <h3>Czy pełnoletność jest wymagana?</h3>
-            <input type="checkbox" name="isAgeOfMajorityRequired" formControlName="isAgeOfMajorityRequired">
-            <h3>Szczegółowy opis</h3>
-            <textarea row="4" name="detail" formControlName="detail"></textarea>
-            <button (click)="createAdvertisement(newJobForm, false)" class="button">Tylko zapisz</button>
-            <button (click)="createAdvertisement(newJobForm, true)" class="button">Zapisz i opublikuj</button>
-            <button routerLink="/account/settings" class="button button-cancel">Anuluj</button>
-        </div>
-
-    </form>
-</div>
+    </div>
+</form>

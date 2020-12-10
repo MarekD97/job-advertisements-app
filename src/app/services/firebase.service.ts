@@ -11,6 +11,7 @@ const firebaseErrors = {
   'auth/user-disabled': 'Użytkownik zablokowany przez administratora.',
   'auth/weak-password': 'Hasło musi się składać z przynajmniej 6 znaków!',
   'auth/email-already-in-use': 'Ten adres e-mail jest aktualnie używany przez inne konto.',
+  'auth/wrong-password': 'Niepoprawne hasło!'
 };
 
 @Injectable({
@@ -26,6 +27,7 @@ export class FirebaseService {
         this.currentUser = user;
         this.isLogged = true;
       } else {
+        this.currentUser = undefined;
         this.isLogged = false;
       }
     });
@@ -75,8 +77,10 @@ export class FirebaseService {
       await this.auth.signOut()
       .then(res => {
         this.auth.onAuthStateChanged((user) => {
-          this.currentUser = user;
-          this.isLogged = false;
+          if(!user) {
+            this.currentUser = undefined;
+            this.isLogged = false;
+          }
         });
       });
       return true;
@@ -126,8 +130,10 @@ export class FirebaseService {
   }
 
   getAdvertisements(): Observable<any> {
-    return this.fs.collection('advertisements').valueChanges({idField: 'id'});
-    // return this.fs.collection('advertisements', ref => ref.where('expectedPrice', '==', '123')).valueChanges();
+    return this.fs.collection('advertisements', ref => ref.where('isActive', '==', true).orderBy('updatedAt', 'desc')).valueChanges({idField: 'id'});
+  }
+  getLastAdvertisements(number: number): Observable<any> {
+    return this.fs.collection('advertisements', ref => ref.where('isActive', '==', true).orderBy('updatedAt', 'desc').limit(number)).valueChanges({idField: 'id'});
   }
 
   getAdvertisement(id: string): Observable<any> {

@@ -2,15 +2,18 @@
   <div class="row">
     <p class="p-large p-bold">Filtry</p>
     <div class="column">
-      <label for="category-select">Kategoria</label>
-      <select name="category" formControlName="category" id="category-select" (change)="filterCategoryChange($event)">
+      <label for="category-select" class="p-medium">Kategoria</label>
+      <select name="category" id="category-select" (change)="filterCategoryChange($event)">
         <option value="all" [selected]="true">Wszystkie</option>
         <option *ngFor="let categoryItem of categories" value="{{categoryItem}}">{{categoryItem}}</option>
       </select>
     </div>
     <div class="column">
-      <label for="age-select">Dla niepełnoletnich</label>
-      <input type="checkbox" name="age" id="age-select" (change)="filterAgeChange($event)">
+      <label for="age-select" style="display: flex;">
+        <input type="checkbox" name="age" id="age-select" (change)="filterAgeChange($event)">
+        <p class="p-medium">Dla niepełnoletnich</p>
+        <div class="checkbox"></div>
+      </label>
     </div>
   </div>
   <div class="row">
@@ -25,3 +28,4 @@
     </div>
   </div>
 </div>
+<div class="topbar"></div>

@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'jobs', component: JobsComponent },
   { path: 'jobs/new', component: NewJobComponent },
   { path: 'jobs/:id', component: ShowJobComponent },
+  { path: 'jobs/edit/:id', component: NewJobComponent },
   { path: 'messages', component: MessagesComponent }
 ];
 

@@ -1,7 +1,10 @@
-<div>
-    <p>Czy napewno chcesz się wylogować?</p>
-    <span>
-        <button (click)="onLogoutClick()">Tak</button>
-        <button (click)="goBack()" class="cancel">Nie</button>
+<h2 class="h-medium">Czy napewno?</h2>
+<div class="row">
+  <div class="column">
+    <p class="p-large p-white p-bold" style="text-align: center;">Czy chcesz się wylogować?</p>
+    <span style="display: flex;justify-content: center;">
+      <button (click)="goBack()" class="button button-cancel">Nie</button>
+      <button (click)="onLogoutClick()" class="button">Tak</button>
     </span>
+  </div>
 </div>

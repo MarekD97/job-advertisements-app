@@ -130,10 +130,14 @@ export class FirebaseService {
   }
 
   getAdvertisements(): Observable<any> {
-    return this.fs.collection('advertisements', ref => ref.where('isActive', '==', true).orderBy('updatedAt', 'desc')).valueChanges({idField: 'id'});
+    return this.fs.collection('advertisements', ref => ref.where('isActive', '==', true)
+    .orderBy('updatedAt', 'desc'))
+    .valueChanges({idField: 'id'});
   }
-  getLastAdvertisements(number: number): Observable<any> {
-    return this.fs.collection('advertisements', ref => ref.where('isActive', '==', true).orderBy('updatedAt', 'desc').limit(number)).valueChanges({idField: 'id'});
+  getLastAdvertisements(count: number): Observable<any> {
+    return this.fs.collection('advertisements', ref => ref.where('isActive', '==', true)
+    .orderBy('updatedAt', 'desc').limit(count))
+    .valueChanges({idField: 'id'});
   }
 
   getAdvertisement(id: string): Observable<any> {
@@ -141,8 +145,8 @@ export class FirebaseService {
   }
 
   getUserAdvertisements(): Observable<any> {
-    const userAdvertisements = this.fs.collection('advertisements', ref => ref.where('userAccountId', '==', this.currentUser.uid));
-    return userAdvertisements.valueChanges({idField: 'id'});
+    return this.fs.collection('advertisements', ref => ref.where('userAccountId', '==', this.currentUser.uid))
+     .valueChanges({idField: 'id'});
   }
 
   getProfileData(): Observable<any> {
@@ -157,8 +161,21 @@ export class FirebaseService {
     this.fs.collection('users').doc(this.currentUser.uid).set(profileData);
   }
 
-  createNewAdvertisement(advertisement: object): void {
+  createAdvertisement(advertisement: object): void {
     this.fs.collection('advertisements').add(advertisement);
+  }
+
+  updateAdvertisement(id: string, advertisement: object): void {
+    this.fs.collection('advertisements').doc(id).update(advertisement);
+  }
+
+  deleteAdvertisement(id: string): void {
+    this.fs.collection('advertisements').doc(id).delete();
+    this.fs.collection('messages', ref => ref.where('advertisementId', '==', id)).valueChanges({idField: 'id'}).subscribe(data => {
+      data.forEach(item => {
+        this.fs.collection('messages').doc(item.id).delete();
+      });
+    });
   }
 
   sendMessage(receiverId: string, senderId: string, advertisementId: string, content: string): void {

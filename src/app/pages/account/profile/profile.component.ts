@@ -49,13 +49,18 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfileData(fg: FormGroup): void {
-    this.fs.updateProfileData(fg.value);
-    this.fs.auth.user.subscribe(userState => {
-      userState.updateProfile({
-        displayName: `${fg.value.firstname} ${fg.value.lastname}`,
-        photoURL: this.photoURL
+    if (fg.valid) {
+      this.fs.updateProfileData(fg.value);
+      this.fs.auth.user.subscribe(userState => {
+        userState.updateProfile({
+          displayName: `${fg.value.firstname} ${fg.value.lastname}`,
+          photoURL: this.photoURL
+        });
       });
-    });
+      this.router.navigate(['/account/settings']);
+    } else {
+      alert('Wypełnij wszystkie pola!')
+    }
   }
 
   onFileSelected(event): void {

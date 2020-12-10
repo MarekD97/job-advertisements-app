@@ -72,9 +72,13 @@ export class JobsComponent implements OnInit {
   }
 
   filterAge(age: boolean): void {
-    this.dataList = this.dataAll.filter(item => {
-      return item.isAgeOfMajorityRequired !== age;
-    });
+    if(age) {
+      this.dataList = this.dataAll.filter(item => {
+        return item.isAgeOfMajorityRequired !== age;
+      });
+    } else {
+      this.dataList = this.dataAll;
+    }
   }
 
 }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -9,7 +10,8 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 export class ListItemComponent implements OnInit {
   @Input() item: any;
-  constructor(public fs: FirebaseService) { }
+  isdeleteWindowVisible = false;
+  constructor(public fs: FirebaseService, public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,6 +20,13 @@ export class ListItemComponent implements OnInit {
     moment.locale('pl');
     const date = moment(dateToFormat.toDate());
     return date.format('DD MMMM yyyy, HH:mm');
+  }
+
+  onDeleteClick(id: string): void {
+    this.fs.deleteAdvertisement(id);
+  }
+  onEditClick(id: string): void {
+    this.router.navigate(['/jobs/edit/' + id]);
   }
 
 }

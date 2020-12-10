@@ -17,11 +17,18 @@
       <p class="p-medium p-white" >Zapisano {{formatDate(item.updatedAt)}}, nieopublikowano</p>
     </ng-template>
     <div *ngIf="fs.currentUser !== undefined && item.userAccountId === fs.currentUser.uid; else showDetails">
-      <button class="button button-cancel">Usuń</button>
-      <button class="button" style="margin-left: 16px;">Edytuj</button>
+      <button class="button button-cancel" (click)="isdeleteWindowVisible = true">Usuń</button>
+      <button class="button" style="margin-left: 16px;" (click)="onEditClick(item.id)">Edytuj</button>
     </div>
     <ng-template #showDetails>
       <a [routerLink]="['/jobs/', item.id]" class="button">Szczegóły</a>
     </ng-template>
+  </div>
+  <div *ngIf="isdeleteWindowVisible" class="item-cover">
+    <span>
+      <p class="p-medium p-bold p-white">Czy napewno usunąć?</p>
+      <button class="button" style="margin-left: 16px;" (click)="onDeleteClick(item.id)">Tak, USUŃ</button>
+      <button class="button" style="margin-left: 16px;" (click)="isdeleteWindowVisible = false">Nie</button>
+    </span>
   </div>
 </div>

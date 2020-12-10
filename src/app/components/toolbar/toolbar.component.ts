@@ -13,7 +13,7 @@ export class ToolbarComponent implements OnInit {
     'Sprzątanie',
     'Opieka nad zwierzętami',
     'Opieka nad dziećmi',
-    'Opieka nad osobami niepełnosprawnymi',
+    'Opieka nad niepełnosprawnymi',
     'Ogrodnictwo',
     'Udzielanie korepetycji',
     'Transport',

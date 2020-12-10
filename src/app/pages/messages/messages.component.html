@@ -1,10 +1,28 @@
 <h2 class="h-medium">Wiadomości</h2>
 <app-settings-bar></app-settings-bar>
-<div class="topbar"></div>
-<div *ngFor="let item of messagesList">
-  <h1>Wiadomość od: {{item.sender!==undefined ? item.sender.firstname+' '+item.sender.lastname : ''}}</h1>
-  <h2>Ogłoszenie: {{item.advertisement!==undefined ? item.advertisement.title : ''}}</h2>
-  <a [routerLink]="['/jobs/', item.advertisementId]">Link</a>
-  <p>Treść: {{item.content}}</p>
-  <p>Napisano: {{item.createdAt!==undefined ? formatDate(item.createdAt) : ''}}</p>
+<div *ngIf="users.length > 0; else showMessage" class="group" style="justify-content: flex-start;">
+  <button *ngFor="let user of users; let i = index"
+    (click)="selectUser(i)"
+    class="button button-cancel {{selectedUser.id === user.id ? 'active' : ''}}"
+    title="{{user.firstname}} {{user.lastname}}">
+    <img src="{{user.image.url}}" alt="user" class="image-chat">
+    <span class="label">{{user.firstname}} {{user.lastname}}</span>
+  </button>
 </div>
+<h1 *ngIf="selectedUser !== undefined" class="h-large">Wiadomości od {{selectedUser.firstname}} {{selectedUser.lastname}}</h1>
+<div *ngIf="selectedUser !== undefined" class="row">
+  <div *ngFor="let item of selectedMessages" class="column">
+    <p *ngIf="item.advertisement !== undefined" class="p-large p-bold p-white">Ogłoszenie: {{item.advertisement.title}}</p>
+    <p class="p-medium p-white">Treść: {{item.content}}</p>
+    <p class="p-medium p-white">Wysłana: {{formatDate(item.createdAt)}}</p>
+    <p class="p-medium p-white">Odpowiedz:</p>
+    <app-message-form
+    messageTo="{{selectedUser.firstname}} {{selectedUser.lastname}}"
+    [receiverId]="selectedUser.id"
+    [advertisementId]="item.advertisementId"
+  ></app-message-form>
+  </div>
+</div>
+<ng-template #showMessage>
+  <h1 class="h-large">Brak wiadomości</h1>
+</ng-template>

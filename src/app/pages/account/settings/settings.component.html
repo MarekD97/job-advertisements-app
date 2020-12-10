@@ -1,6 +1,5 @@
 <h2 class="h-medium">Zarządzanie kontem</h2>
 <app-settings-bar></app-settings-bar>
-<div class="topbar"></div>
 <app-list-item *ngFor="let item of data" [item]="item">
 </app-list-item>
 <h1 *ngIf="data === undefined || data.length === 0" class="h-large">Brak ogłoszeń</h1>

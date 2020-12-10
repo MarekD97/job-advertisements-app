@@ -1,14 +1,14 @@
 <form
   *ngIf="!sendStatus; else showAlert"
   [formGroup]="messageForm"
-  (ngSubmit)="sendMessage(messageForm)">
-    <h1>Wiadomość do: {{messageTo}}</h1>
-    <textarea name="content" cols="30" rows="10" formControlName="content"></textarea>
+  (ngSubmit)="sendMessage(messageForm)"
+  class="container" style="padding: 20px 22px; align-items: flex-end; border-radius: 24px; flex-direction: column;">
+    <textarea name="content" cols="30" rows="10" formControlName="content" class="form-input" style="width: 100%; resize: vertical;"></textarea>
     <span>
-        <button type="button" class="cancel" (click)="onCancelClick()">Anuluj</button>
-        <input type="submit" value="Wyślij">
+        <button type="button" class="button button-cancel" (click)="onCancelClick()">Anuluj</button>
+        <input type="submit" value="Wyślij" class="button">
     </span>
 </form>
 <ng-template #showAlert>
-  <h1>Pomyślnie wysłano</h1>
+  <p class="p-large p-bold">Pomyślnie wysłano</p>
 </ng-template>

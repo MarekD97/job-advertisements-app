@@ -1,31 +1,24 @@
 <div class="container">
-  <div class="row">
-    <p class="p-large p-bold">Filtry</p>
-    <div class="column">
-      <label for="category-select" class="p-medium">Kategoria</label>
-      <select name="category" id="category-select" (change)="filterCategoryChange($event)">
+    <label for="toolbar-category" class="form-label">
+      <span class="form-text">Filtruj według kategorii</span>
+      <select name="category" id="toolbar-category" (change)="filterCategoryChange($event)" class="form-input">
         <option value="all" [selected]="true">Wszystkie</option>
         <option *ngFor="let categoryItem of categories" value="{{categoryItem}}">{{categoryItem}}</option>
       </select>
-    </div>
-    <div class="column">
-      <label for="age-select" style="display: flex;">
-        <input type="checkbox" name="age" id="age-select" (change)="filterAgeChange($event)">
-        <p class="p-medium">Dla niepełnoletnich</p>
-        <div class="checkbox"></div>
-      </label>
-    </div>
-  </div>
-  <div class="row">
-    <p class="p-large p-bold">Sortuj</p>
-    <div class="column">
-      <select name="sort" (change)="sortChange($event)">
-        <option value="latest">Od najnowszych</option>
-        <option value="oldest">Od najstarszych</option>
-        <option value="alphabetically">Alfabetycznie</option>
-        <option value="highest">Od najwyżego wynagrodzenia</option>
+    </label>
+    <label for="toolbar-age" class="form-label" style="flex-direction: row; align-items: center;">
+      <span class="form-text">Ogłoszenia dla niepełnoletnich</span>
+      <input type="checkbox" name="age" id="toolbar-age" (change)="filterAgeChange($event)" class="form-input">
+      <div class="checkbox"></div>
+    </label>
+    <label for="toolbar-sort" class="form-label">
+      <span class="form-text">Sortuj</span>
+      <select name="sort" (change)="sortChange($event)" id="toolbar-sort" class="form-input">
+        <option value="latest">od najnowszych</option>
+        <option value="oldest">od najstarszych</option>
+        <option value="alphabetically">alfabetycznie</option>
+        <option value="highest">od najwyżego wynagrodzenia</option>
       </select>
-    </div>
-  </div>
+    </label>
 </div>
 <div class="topbar"></div>

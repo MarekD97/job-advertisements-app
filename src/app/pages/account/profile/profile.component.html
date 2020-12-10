@@ -1,39 +1,59 @@
-<h2>Dane użytkownika</h2>
-<form [formGroup]="profileForm" (ngSubmit)="updateProfileData(profileForm)">
+<h2 class="h-medium">Dane użytkownika</h2>
+<app-settings-bar></app-settings-bar>
+<form [formGroup]="profileForm" (ngSubmit)="updateProfileData(profileForm)" class="form row">
     <div class="column">
         <span class="image">
-            <img src="{{photoURL}}" alt="Zdjęcie profilowe" style="width: 128px;height: 128px; border-radius: 64px;">
-            <h1>Zdjęcie profilowe</h1>
+            <img *ngIf="photoURL!==undefined; else noUserImage" src="{{photoURL}}" alt="Zdjęcie profilowe" class="image-user">
+            <ng-template #noUserImage>
+              <div class="image-user"></div>
+            </ng-template>
+            <p class="p-large p-white">Zdjęcie profilowe</p>
         </span>
         <label for="fileInput" class="button">
             <input id="fileInput" type="file" #userPhoto (change)="onFileSelected($event)" style="display:none">
             Załaduj nowe zdjęcie
         </label>
-        <p>Imię</p>
-        <input type="text" name="firstname" formControlName="firstname">
-        <p>Nazwisko</p>
-        <input type="text" name="lastname" formControlName="lastname">
-        <p>Numer telefonu</p>
-        <input type="text" name="phoneNumber" formControlName="phoneNumber">
-        <p>E-mail</p>
-        <p title="Adresu e-mail nie można zmienić.">{{fs.currentUser.email}}</p>
+        <label for="user-firstname" class="form-label">
+          <span class="form-text">Imię</span>
+          <input type="text" name="firstname" formControlName="firstname" id="user-firstname" class="form-input">
+        </label>
+        <label for="user-lastname" class="form-label">
+          <span class="form-text">Nazwisko</span>
+          <input type="text" name="lastname" formControlName="lastname" id="user-lastname" class="form-input">
+        </label>
+        <label for="user-phonenumber" class="form-label">
+          <span class="form-text">Numer telefonu</span>
+          <input type="text" name="phoneNumber" formControlName="phoneNumber" id="user-phonenumber" class="form-input">
+        </label>
+        <label for="user-email" class="form-label">
+          <span class="form-text">E-mail</span>
+          <input class="form-input p-white" title="Adresu e-mail nie można zmienić." id="user-email" value="{{fs.currentUser.email}}" disabled>
+        </label>
     </div>
     <div class="column" formGroupName="address">
-        <h3>Adres</h3>
-        <p>Ulica</p>
-        <span class="street-form">
-            <input type="text" name="streetName" formControlName="streetName">
-            <input type="text" name="streetNumber" formControlName="streetNumber">
+        <p class="p-large p-white">Adres</p>
+        <label for="user-street" class="form-label">
+          <span class="form-text">Nazwa ulicy, numer mieszkania</span>
+          <span id="user-street" style="display: flex;">
+            <input type="text" name="streetName" formControlName="streetName" id="user-streetname" class="form-input" style="width: 70%; margin-right: 5%;">
+            <input type="text" name="streetNumber" formControlName="streetNumber" id="user-streetnumber" class="form-input" style="width: 25%;">
         </span>
-        <p>Kod pocztowy</p>
-        <input type="text" name="postcode" formControlName="postcode">
-        <p>Miasto</p>
-        <input type="text" name="city" formControlName="city">
-        <p>Kraj</p>
-        <input type="text" name="country" formControlName="country">
+        </label>
+        <label for="user-postcode" class="form-label">
+          <span class="form-text">Kod pocztowy</span>
+          <input type="text" name="postcode" formControlName="postcode" id="user-postcode" class="form-input">
+        </label>
+        <label for="user-city" class="form-label">
+          <span class="form-text">Miasto</span>
+          <input type="text" name="city" formControlName="city" id="user-city" class="form-input">
+        </label>
+        <label for="user-country" class="form-label">
+          <span class="form-text">Kraj</span>
+          <input type="text" name="country" formControlName="country" id="user-country" class="form-input">
+        </label>
+        <span style="display: flex; justify-content: flex-end; flex-wrap: wrap;">
+          <button routerLink="/account/settings" class="button button-cancel">Anuluj</button>
+          <input type="submit" class="button" value="Zapisz wszystkie zmiany">
+      </span>
     </div>
-    <span class="submit-buttons">
-        <button routerLink="/account/settings" class="cancel">Anuluj</button>
-        <input type="submit" value="Zapisz wszystkie zmiany">
-    </span>
 </form>

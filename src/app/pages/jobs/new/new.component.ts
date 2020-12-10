@@ -2,7 +2,7 @@ import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class NewJobComponent implements OnInit {
     'Sprzątanie',
     'Opieka nad zwierzętami',
     'Opieka nad dziećmi',
-    'Opieka nad osobami niepełnosprawnymi',
+    'Opieka nad niepełnosprawnymi',
     'Ogrodnictwo',
     'Udzielanie korepetycji',
     'Transport',
@@ -24,7 +24,15 @@ export class NewJobComponent implements OnInit {
     'Inne'
   ];
   photoURL: string;
-  constructor(public fs: FirebaseService, public fb: FormBuilder, public router: Router, private storage: AngularFireStorage) {
+  data: any;
+  isUpdated = false;
+  jobId: string;
+  constructor(
+    public fs: FirebaseService,
+    public fb: FormBuilder,
+    public router: Router,
+    private route: ActivatedRoute,
+    private storage: AngularFireStorage) {
     fs.auth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/account/login']);
@@ -38,13 +46,29 @@ export class NewJobComponent implements OnInit {
       detail: new FormControl('', [Validators.required]),
     });
     this.photoURL = 'https://firebasestorage.googleapis.com/v0/b/praca-dla-mlodych.appspot.com/o/assets%2Flogo.png?alt=media&token=11411bbd-6d70-4b96-8c2c-67fb3ec24b24';
+    this.route.params.subscribe((params) => {
+      if (params.id !== undefined) {
+        this.data = this.fs.getAdvertisement(params.id).subscribe(data => {
+          this.newJobForm = this.fb.group({
+            title: new FormControl(data.title, [Validators.required]),
+            category: new FormControl(data.category, [Validators.required]),
+            expectedPrice: new FormControl(data.expectedPrice, [Validators.required]),
+            isAgeOfMajorityRequired: new FormControl(data.isAgeOfMajorityRequired),
+            detail: new FormControl(data.detail, [Validators.required]),
+          });
+          this.photoURL = data.image.url;
+          this.isUpdated = true;
+          this.jobId = params.id;
+        });
+      };
+    });
   }
 
   ngOnInit(): void {
   }
 
   createAdvertisement(fg: FormGroup, isPublished: boolean): void {
-    if(fg.valid) {
+    if (fg.valid) {
       const newAdvertisement = {
         title: fg.value.title,
         category: fg.value.category,
@@ -59,7 +83,11 @@ export class NewJobComponent implements OnInit {
           url: this.photoURL
         }
       };
-      this.fs.createNewAdvertisement(newAdvertisement);
+      if(this.isUpdated) {
+        this.fs.updateAdvertisement(this.jobId, newAdvertisement);
+      } else {
+        this.fs.createAdvertisement(newAdvertisement);
+      }
       this.router.navigate(['/account/settings']);
     } else {
       alert('Nie podano wszystkich danych!');

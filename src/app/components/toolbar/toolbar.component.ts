@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -6,9 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  @Output() filterCategory: EventEmitter<void> = new EventEmitter();
-  @Output() filterAge: EventEmitter<void> = new EventEmitter();
-  @Output() sortType: EventEmitter<void> = new EventEmitter();
+  @Output() onFilterChange: EventEmitter<void> = new EventEmitter();
   public categories: string[] = [
     'Sprzątanie',
     'Opieka nad zwierzętami',
@@ -20,20 +19,20 @@ export class ToolbarComponent implements OnInit {
     'Praca sezonowa',
     'Inne'
   ];
-  constructor() { }
+  form: FormGroup;
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      searchText: new FormControl(''),
+      category: new FormControl('all'),
+      age: new FormControl(false),
+      sort: new FormControl('latest')
+    });
+  }
 
   ngOnInit(): void {
   }
 
-  sortChange(event: any): void {
-    this.sortType.emit(event.target.value);
-  }
-
-  filterCategoryChange(event: any): void {
-    this.filterCategory.emit(event.target.value);
-  }
-
-  filterAgeChange(event: any): void {
-    this.filterAge.emit(event.target.checked);
+  updateFilter() {
+    this.onFilterChange.emit(this.form.value);
   }
 }

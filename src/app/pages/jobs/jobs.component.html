@@ -1,7 +1,5 @@
 <app-toolbar
-  (filterCategory)="filterCategory($event)"
-  (filterAge)="filterAge($event)"
-  (sortType)="sortData($event)">
+  (onFilterChange)="onFilterChange($event)">
 </app-toolbar>
 <!-- <app-list-item *ngFor="let item of dataList | slice:0:10" [item]="item"> -->
 <app-list-item *ngFor="let item of dataList" [item]="item">

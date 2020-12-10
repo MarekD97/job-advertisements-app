@@ -1,24 +1,28 @@
-<div class="container">
+<form class="container" [formGroup]="form">
+  <label for="toolbar-search-text" class="form-label">
+    <span class="form-text">Filtruj</span>
+    <input type="text" name="searchText" id="toolbar-search-text" formControlName="searchText" (input)="updateFilter()" class="form-input" placeholder="Wyszukaj...">
+  </label>
     <label for="toolbar-category" class="form-label">
       <span class="form-text">Filtruj według kategorii</span>
-      <select name="category" id="toolbar-category" (change)="filterCategoryChange($event)" class="form-input">
+      <select name="category" id="toolbar-category" formControlName="category" (change)="updateFilter()" class="form-input">
         <option value="all" [selected]="true">Wszystkie</option>
         <option *ngFor="let categoryItem of categories" value="{{categoryItem}}">{{categoryItem}}</option>
       </select>
     </label>
     <label for="toolbar-age" class="form-label" style="flex-direction: row; align-items: center;">
-      <span class="form-text">Ogłoszenia dla niepełnoletnich</span>
-      <input type="checkbox" name="age" id="toolbar-age" (change)="filterAgeChange($event)" class="form-input">
+      <span class="form-text">Pokaż tylko dla niepełnoletnich</span>
+      <input type="checkbox" name="age" id="toolbar-age" formControlName="age" (change)="updateFilter()" class="form-input">
       <div class="checkbox"></div>
     </label>
     <label for="toolbar-sort" class="form-label">
       <span class="form-text">Sortuj</span>
-      <select name="sort" (change)="sortChange($event)" id="toolbar-sort" class="form-input">
+      <select name="sort" id="toolbar-sort" formControlName="sort" (change)="updateFilter()" class="form-input">
         <option value="latest">od najnowszych</option>
         <option value="oldest">od najstarszych</option>
         <option value="alphabetically">alfabetycznie</option>
         <option value="highest">od najwyżego wynagrodzenia</option>
       </select>
     </label>
-</div>
+</form>
 <div class="topbar"></div>

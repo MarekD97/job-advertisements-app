@@ -145,8 +145,12 @@ export class FirebaseService {
   }
 
   getUserAdvertisements(): Observable<any> {
-    return this.fs.collection('advertisements', ref => ref.where('userAccountId', '==', this.currentUser.uid))
-     .valueChanges({idField: 'id'});
+    try {
+      return this.fs.collection('advertisements', ref => ref.where('userAccountId', '==', this.currentUser.uid))
+      .valueChanges({idField: 'id'});
+    } catch (error) {
+
+    }
   }
 
   getProfileData(): Observable<any> {

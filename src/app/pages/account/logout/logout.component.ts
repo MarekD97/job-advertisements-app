@@ -11,7 +11,11 @@ import { Location } from '@angular/common';
 export class LogoutComponent implements OnInit {
 
   constructor(public fs: FirebaseService, public router: Router, private location: Location) {
-
+    fs.auth.onAuthStateChanged(user => {
+      if (!user) {
+        router.navigate(['/account/login']);
+      }
+    });
   }
 
   ngOnInit(): void {

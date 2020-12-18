@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
       });
       this.router.navigate(['/account/settings']);
     } else {
-      alert('Wypełnij wszystkie pola!')
+      alert('Wypełnij wszystkie pola!');
     }
   }
 

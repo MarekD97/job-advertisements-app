@@ -10,5 +10,5 @@
     </span>
 </form>
 <ng-template #showAlert>
-  <p class="p-large p-bold">Pomyślnie wysłano</p>
+  <p class="p-large p-bold {{color !== undefined && color === 'white' ? 'p-white' : ''}}">Pomyślnie wysłano</p>
 </ng-template>

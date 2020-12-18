@@ -14,14 +14,14 @@ export class JobsComponent implements OnInit {
   userList: Array<any>;
   filters: any;
   constructor(public fs: FirebaseService, public router: Router) {
-    this.fs.fs.collection('users').valueChanges({idField: 'id'}).subscribe(data => {
-      this.userList = data;
-    });
-    this.fs.getAdvertisements().subscribe((data) => {
-      this.dataList = data;
-      this.dataAll = data;
-      this.dataList.map(item => {
-        item.author = this.userList.find(element => element.id === item.userAccountId);
+    this.fs.fs.collection('users').valueChanges({idField: 'id'}).subscribe(users => {
+      this.userList = users;
+      this.fs.getAdvertisements().subscribe((data) => {
+        this.dataList = data;
+        this.dataAll = data;
+        this.dataList.map(item => {
+          item.author = this.userList.find(element => element.id === item.userAccountId);
+        });
       });
     });
   }
@@ -34,53 +34,6 @@ export class JobsComponent implements OnInit {
     const date = moment(dateToFormat.toDate());
     return date.format('HH:mm, DD MMMM yyyy');
   }
-
-  // sortData(type: string): void {
-  //   switch (type) {
-  //     case 'latest': {
-  //       this.dataList = this.dataList.sort((a, b) => {
-  //         return b.updatedAt - a.updatedAt;
-  //       });
-  //       break;
-  //     }
-  //     case 'oldest': {
-  //       this.dataList = this.dataList.sort((a, b) => {
-  //         return a.updatedAt - b.updatedAt;
-  //       });
-  //       break;
-  //     }
-  //     case 'alphabetically': {
-  //       this.dataList = this.dataList.sort((a, b) => a.title.localeCompare(b.title));
-  //       break;
-  //     }
-  //     case 'highest': {
-  //       this.dataList = this.dataList.sort((a, b) => {
-  //         return parseFloat(b.expectedPrice) - parseFloat(a.expectedPrice);
-  //       });
-  //       break;
-  //     }
-  //   }
-  // }
-
-  // filterCategory(category: string): void {
-  //   this.dataList = this.dataAll.filter(item => {
-  //     if (category === 'all') {
-  //       return item;
-  //     } else {
-  //       return item.category === category;
-  //     }
-  //   });
-  // }
-
-  // filterAge(age: boolean): void {
-  //   if(age) {
-  //     this.dataList = this.dataAll.filter(item => {
-  //       return item.isAgeOfMajorityRequired !== age;
-  //     });
-  //   } else {
-  //     this.dataList = this.dataAll;
-  //   }
-  // }
 
   onFilterChange({searchText, category, age, sort}): void {
     this.dataList = this.dataAll.filter(item => {

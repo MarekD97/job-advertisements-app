@@ -11,10 +11,12 @@ export class SettingsComponent implements OnInit {
   public data: any;
   constructor(public fs: FirebaseService) {
     this.fs.auth.onAuthStateChanged(user => {
-      this.fs.getUserAdvertisements().subscribe(data => {
-        this.data = data;
-      });
-    })
+      if (user) {
+        this.fs.getUserAdvertisements().subscribe(data => {
+          this.data = data;
+        });
+      }
+    });
   }
 
   ngOnInit(): void {

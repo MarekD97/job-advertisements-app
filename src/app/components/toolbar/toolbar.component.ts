@@ -32,7 +32,7 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateFilter() {
+  updateFilter(): void {
     this.onFilterChange.emit(this.form.value);
   }
 }

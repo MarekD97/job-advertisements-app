@@ -10,8 +10,8 @@
   </button>
 </div>
 <h1 *ngIf="selectedUser !== undefined" class="h-large">Wiadomości od {{selectedUser.firstname}} {{selectedUser.lastname}}</h1>
-<div *ngIf="selectedUser !== undefined" class="row">
-  <div *ngFor="let item of selectedMessages" class="column">
+<div *ngIf="selectedUser !== undefined" class="row" style="flex-wrap: wrap;">
+  <div *ngFor="let item of selectedMessages" class="column" style="min-width: 30%;">
     <p *ngIf="item.advertisement !== undefined" class="p-large p-bold p-white">Ogłoszenie: {{item.advertisement.title}}</p>
     <p class="p-medium p-white">Treść: {{item.content}}</p>
     <p class="p-medium p-white">Wysłana: {{formatDate(item.createdAt)}}</p>
@@ -20,6 +20,7 @@
     messageTo="{{selectedUser.firstname}} {{selectedUser.lastname}}"
     [receiverId]="selectedUser.id"
     [advertisementId]="item.advertisementId"
+    color="white"
   ></app-message-form>
   </div>
 </div>

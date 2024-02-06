@@ -1,6 +1,6 @@
 <h2 class="h-medium">Dodaj nowe ogłoszenie</h2>
 <app-settings-bar></app-settings-bar>
-<form [formGroup]="newJobForm" method="POST" class="form row">
+<form *ngIf="form" [formGroup]="form" class="form row">
     <div class="column">
         <label for="job-title" class="form-label">
           <span class="form-text">Tytuł ogłoszenia</span>
@@ -8,8 +8,8 @@
         </label>
         <label for="job-image" class="form-label">
           <span class="form-text">Zdjęcie</span>
-          <img *ngIf="photoURL!==undefined; else templateImage" src="{{photoURL}}" alt="Zdjęcie" class="image-offer" style="align-self: center;">
-          <ng-template #templateImage>
+          <img *ngIf="photoUrl; else imageTemplate" [src]="photoUrl" alt="Zdjęcie" class="image-offer" style="align-self: center;">
+          <ng-template #imageTemplate>
             <img src="https://firebasestorage.googleapis.com/v0/b/praca-dla-mlodych.appspot.com/o/assets%2Flogo.png?alt=media&token=11411bbd-6d70-4b96-8c2c-67fb3ec24b24"
             alt="Zdjęcie" class="image-offer" style="align-self: center;">
           </ng-template>
@@ -23,7 +23,9 @@
         <label for="job-category" class="form-label">
           <span class="form-text">Kategoria</span>
           <select name="category" formControlName="category" id="job-category" class="form-input">
-            <option *ngFor="let categoryItem of categories" value="{{categoryItem}}">{{categoryItem}}</option>
+            <option *ngFor="let category of categoryList" [id]="category.id" [value]="category.name">
+                {{category.name}}
+            </option>
           </select>
         </label>
         <label for="job-price" class="form-label">
@@ -40,9 +42,10 @@
           <textarea row="4" name="detail" formControlName="detail" id="job-detail" class="form-input"></textarea>
         </label>
         <div class="button-wrapper">
-          <button (click)="createAdvertisement(newJobForm, true)" class="button">Zapisz i opublikuj</button>
-          <button (click)="createAdvertisement(newJobForm, false)" class="button">Tylko zapisz</button>
+          <button (click)="onSubmit(true)" class="button">Zapisz i opublikuj</button>
+          <button (click)="onSubmit(false)" class="button">Tylko zapisz</button>
           <button routerLink="/account/settings" class="button button-cancel">Anuluj</button>
         </div>
     </div>
 </form>
+

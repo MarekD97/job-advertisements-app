@@ -1,23 +1,23 @@
 <div class="group">
-  <button routerLink="/account/settings" class="button {{activeNumber == 0 ? 'active': ''}}" title="Lista ogłoszeń">
+  <button routerLink="/account/settings" class="button" [ngClass]="{'active': selectedId == 0}" title="Lista ogłoszeń">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;">
       <path d="M3 4H7V8H3V4ZM9 5V7H21V5H9ZM3 10H7V14H3V10ZM9 11V13H21V11H9ZM3 16H7V20H3V16ZM9 17V19H21V17H9Z" fill="#242985"/>
       </svg>
     <span class="label">Lista ogłoszeń</span>
   </button>
-  <button routerLink="/jobs/new" class="button {{activeNumber == 1 ? 'active': ''}}" title="Dodaj ogłoszenie">
+  <button routerLink="/job/create" class="button" [ngClass]="{'active': selectedId == 1}" title="Dodaj ogłoszenie">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;">
       <path d="M17 13H13V17H11V13H7V11H11V7H13V11H17V13ZM19 3H5C3.89 3 3 3.89 3 5V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H19C19.5304 21 20.0391 20.7893 20.4142 20.4142C20.7893 20.0391 21 19.5304 21 19V5C21 4.46957 20.7893 3.96086 20.4142 3.58579C20.0391 3.21071 19.5304 3 19 3Z" fill="#242985"/>
     </svg>
     <span class="label">Dodaj ogłoszenie</span>
   </button>
-  <button routerLink="/messages" class="button {{activeNumber == 2 ? 'active': ''}}" title="Wiadomości">
+  <button routerLink="/messages" class="button" [ngClass]="{'active': selectedId == 2}" title="Wiadomości">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;">
       <path d="M17 12V3C17 2.73478 16.8946 2.48043 16.7071 2.29289C16.5196 2.10536 16.2652 2 16 2H3C2.73478 2 2.48043 2.10536 2.29289 2.29289C2.10536 2.48043 2 2.73478 2 3V17L6 13H16C16.2652 13 16.5196 12.8946 16.7071 12.7071C16.8946 12.5196 17 12.2652 17 12ZM21 6H19V15H6V17C6 17.2652 6.10536 17.5196 6.29289 17.7071C6.48043 17.8946 6.73478 18 7 18H18L22 22V7C22 6.73478 21.8946 6.48043 21.7071 6.29289C21.5196 6.10536 21.2652 6 21 6Z" fill="#242985"/>
     </svg>
       <span class="label">Wiadomości</span>
     </button>
-  <button routerLink="/account/profile" class="button {{activeNumber == 3 ? 'active': ''}}" title="Edytuj profil">
+  <button routerLink="/account/profile" class="button" [ngClass]="{'active': selectedId == 3}" title="Edytuj profil">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;">
       <path d="M21.7 13.35L20.7 14.35L18.65 12.3L19.65 11.3C19.7528 11.1992 19.891 11.1428 20.035 11.1428C20.179 11.1428 20.3172 11.1992 20.42 11.3L21.7 12.58C21.91 12.79 21.91 13.14 21.7 13.35ZM12 18.94L18.06 12.88L20.11 14.93L14.06 21H12V18.94ZM12 14C7.58 14 4 15.79 4 18V20H10V18.11L14 14.11C13.34 14.03 12.67 14 12 14ZM12 4C10.9391 4 9.92172 4.42143 9.17157 5.17157C8.42143 5.92172 8 6.93913 8 8C8 9.06087 8.42143 10.0783 9.17157 10.8284C9.92172 11.5786 10.9391 12 12 12C13.0609 12 14.0783 11.5786 14.8284 10.8284C15.5786 10.0783 16 9.06087 16 8C16 6.93913 15.5786 5.92172 14.8284 5.17157C14.0783 4.42143 13.0609 4 12 4Z" fill="#242985"/>
     </svg>

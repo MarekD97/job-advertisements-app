@@ -24,14 +24,16 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { LoginComponent } from './pages/account/login/login.component';
 import { LogoutComponent } from './pages/account/logout/logout.component';
 import { SettingsComponent } from './pages/account/settings/settings.component';
-import { NewJobComponent } from './pages/jobs/new/new.component';
-import { ShowJobComponent } from './pages/jobs/show/show.component';
-import { JobsComponent } from './pages/jobs/jobs.component';
 import { MessageFormComponent } from './components/message-form/message-form.component';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { SettingsBarComponent } from './components/settings-bar/settings-bar.component';
+import { JobFormComponent } from './modules/job/form/job-form.component';
+import { JobViewComponent } from './modules/job/view/job-view.component';
+import { JobListComponent } from './modules/job/job-list.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+import { MomentPipe } from './shared/pipes/moment.pipe';
 
 @NgModule({
   declarations: [
@@ -46,14 +48,16 @@ import { SettingsBarComponent } from './components/settings-bar/settings-bar.com
     SearchbarComponent,
     LogoutComponent,
     SettingsComponent,
-    NewJobComponent,
-    ShowJobComponent,
-    JobsComponent,
     MessageFormComponent,
     MessagesComponent,
     ToolbarComponent,
     ListItemComponent,
     SettingsBarComponent,
+    JobFormComponent,
+    JobViewComponent,
+    JobListComponent,
+    SpinnerComponent,
+    MomentPipe,
   ],
   imports: [
     BrowserModule,

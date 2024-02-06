@@ -4,12 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/account/login/login.component';
 import { SignupComponent } from './pages/account/signup/signup.component';
-import { JobsComponent} from './pages/jobs/jobs.component';
 import { LogoutComponent } from './pages/account/logout/logout.component';
 import { SettingsComponent } from './pages/account/settings/settings.component';
 import { ProfileComponent } from './pages/account/profile/profile.component';
-import { NewJobComponent } from './pages/jobs/new/new.component';
-import { ShowJobComponent } from './pages/jobs/show/show.component';
+import { JobListComponent } from './modules/job/job-list.component';
+import { JobViewComponent } from './modules/job/view/job-view.component';
+import { JobFormComponent } from './modules/job/form/job-form.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,11 +18,28 @@ const routes: Routes = [
   { path: 'account/logout', component: LogoutComponent },
   { path: 'account/settings', component: SettingsComponent },
   { path: 'account/profile', component: ProfileComponent },
-  { path: 'jobs', component: JobsComponent },
-  { path: 'jobs/new', component: NewJobComponent },
-  { path: 'jobs/:id', component: ShowJobComponent },
-  { path: 'jobs/edit/:id', component: NewJobComponent },
-  { path: 'messages', component: MessagesComponent }
+  { path: 'messages', component: MessagesComponent },
+  { 
+    path: 'job',
+    children: [
+      {
+        path: '',
+        component: JobListComponent,
+      },
+      {
+        path: 'create',
+        component: JobFormComponent,
+      },
+      {
+        path: 'edit/:id',
+        component: JobFormComponent,
+      },
+      {
+        path: ':id',
+        component: JobViewComponent,
+      },
+    ]
+  }
 ];
 
 @NgModule({

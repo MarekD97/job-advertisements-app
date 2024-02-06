@@ -7,21 +7,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./settings-bar.component.scss']
 })
 export class SettingsBarComponent implements OnInit {
-  activeNumber: number;
-  constructor(private router: Router) {
-    switch(this.router.url) {
-      case '/account/settings': this.activeNumber = 0;
-      break;
-      case '/jobs/new': this.activeNumber = 1;
-      break;
-      case '/messages': this.activeNumber = 2;
-      break;
-      case '/account/profile': this.activeNumber = 3;
-      break;
-    }
+  public selectedId: number;
+
+  constructor(private readonly router: Router) {
   }
 
   ngOnInit(): void {
+    const urlMap: { [key: string]: number } = {
+      '/account/settings': 0,
+      '/job/create': 1,
+      '/messages': 2,
+      '/account/profile': 3,
+    };
+
+    this.selectedId = urlMap[this.router.url] || 0;
   }
 
 }

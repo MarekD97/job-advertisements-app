@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 
@@ -165,12 +165,12 @@ export class FirebaseService {
     this.fs.collection('users').doc(this.currentUser.uid).set(profileData);
   }
 
-  createAdvertisement(advertisement: object): void {
-    this.fs.collection('advertisements').add(advertisement);
+  createAdvertisement(advertisement: object): Promise<DocumentReference<unknown>> {
+    return this.fs.collection('advertisements').add(advertisement);
   }
 
-  updateAdvertisement(id: string, advertisement: object): void {
-    this.fs.collection('advertisements').doc(id).update(advertisement);
+  updateAdvertisement(id: string, advertisement: object): Promise<void> {
+    return this.fs.collection('advertisements').doc(id).update(advertisement);
   }
 
   deleteAdvertisement(id: string): void {

@@ -1,7 +1,0 @@
-<app-toolbar
-  (onFilterChange)="onFilterChange($event)">
-</app-toolbar>
-<!-- <app-list-item *ngFor="let item of dataList | slice:0:10" [item]="item"> -->
-<app-list-item *ngFor="let item of dataList" [item]="item">
-</app-list-item>
-<h1 *ngIf="dataList === undefined || dataList.length === 0" class="h-large">Brak ogłoszeń</h1>

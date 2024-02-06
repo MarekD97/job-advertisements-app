@@ -1,0 +1,15 @@
+<app-toolbar (onFilterChange)="onFilterChange($event)"></app-toolbar>
+
+<div *ngIf="!loading; else loadingTemplate" class="job-list-container">
+    <ng-container *ngIf="jobs.length > 0; else noDataTemplate">
+        <ng-container *ngFor="let job of jobs">
+            <app-list-item [item]="job"></app-list-item>
+        </ng-container>
+    </ng-container>
+    <ng-template #noDataTemplate>
+        <p class="h-large">Brak ogłoszeń</p>
+    </ng-template>
+</div>
+<ng-template #loadingTemplate>
+    <spinner [loading]="loading"></spinner>
+</ng-template>

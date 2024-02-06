@@ -21,7 +21,7 @@
       <button class="button" style="margin-left: 16px;" (click)="onEditClick(item.id)">Edytuj</button>
     </div>
     <ng-template #showDetails>
-      <a [routerLink]="['/jobs/', item.id]" class="button">Szczegóły</a>
+      <a [routerLink]="['/job/', item.id]" class="button">Szczegóły</a>
     </ng-template>
   </div>
   <div *ngIf="isdeleteWindowVisible" class="item-cover">
